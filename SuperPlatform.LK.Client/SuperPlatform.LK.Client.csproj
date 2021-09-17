@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+	  <PackageReference Include="IdentityModel" Version="5.1.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.18" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
+	  <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.19" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SuperPlatform.LK.Client.Domain\SuperPlatform.LK.Client.Domain.csproj" />
+    <ProjectReference Include="..\SuperPlatform.LK.Client.Integration\SuperPlatform.LK.Client.Integration.csproj" />
+  </ItemGroup>
+
+</Project>
