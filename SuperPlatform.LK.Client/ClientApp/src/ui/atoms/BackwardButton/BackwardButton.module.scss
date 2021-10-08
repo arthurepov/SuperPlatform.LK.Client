@@ -1,0 +1,22 @@
+.button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    & > div {
+        margin-left: 16px;
+        font-size: 1rem;
+    }
+
+    & > svg {
+        transition: all .2s ease-in-out;
+    }
+
+    &:hover {
+        & > svg {
+            transform: scale(.8);
+        }
+    }
+}
