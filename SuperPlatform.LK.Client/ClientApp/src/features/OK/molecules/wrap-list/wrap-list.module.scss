@@ -1,32 +1,28 @@
 .wrap {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 1.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     margin-top: 0.6rem;
-    margin-right: -0.8rem;
+
+    @media (max-width: 400px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .item {
-    max-width: 10.3rem;
     width: 100%;
-    margin-right: 0.8rem;
-    margin-bottom: 1.1rem;
     text-decoration: none;
     position: relative;
 
     &_block {
         width: 100%;
-        min-height: 10.3rem;
         position: relative;
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.25rem;
 
         & > img {
-            position: absolute;
             width: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            height: 100%;
             object-fit: cover;
             object-position: center;
             border-radius: 8px;

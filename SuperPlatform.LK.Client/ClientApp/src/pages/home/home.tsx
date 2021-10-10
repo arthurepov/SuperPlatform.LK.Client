@@ -1,6 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { AllDirectionsPage } from '../../features';
 
-export const Home = () => (
-    <AllDirectionsPage />
-);
+export const Home: FC = () => <AllDirectionsPage />;

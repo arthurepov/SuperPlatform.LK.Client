@@ -5,13 +5,13 @@ import ym from 'react-yandex-metrika';
 import { ROUTES } from './routes';
 
 export const Pages: React.FC = () => {
-    const location = useLocation();
-    
-    useEffect(() => {
-        const { pathname, search } = location;
-        
-        ym('hit', `${pathname}${search}`);
-    }, [location]);
+  const location = useLocation();
 
-    return renderRoutes(ROUTES);
+  useEffect(() => {
+    const { pathname, search } = location;
+
+    ym('hit', `${pathname}${search}`);
+  }, [location]);
+
+  return renderRoutes(ROUTES);
 };

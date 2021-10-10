@@ -7,3 +7,4 @@ export const OK_DISCIPLINES_URL = `/disciplines?${SORT_BY_ID}&${NO_LIMIT}`;
 export const OK_SCHEDULES_URL = `/schedules?${SORT_BY_ID}&${NO_LIMIT}`;
 export const OK_DIRECTIONS_URL = `/directions?${SORT_BY_ID}&${NO_LIMIT}`;
 export const OK_CITIES_URL = `/cities?${SORT_BY_ID}&${NO_LIMIT}`;
+export const CHILDREN_URL = `/api/v1/Children`;

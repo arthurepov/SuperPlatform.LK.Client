@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+
+  & + .root {
+    margin-top: 1.75rem;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      content: '';
+      background-color: rgba(0, 0, 0, 0.12);
+      height: 1px;
+      left: 3.5rem;
+      right: 0;
+      top: -0.9rem;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 1rem;
+}

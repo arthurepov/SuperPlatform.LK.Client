@@ -1,0 +1,89 @@
+.typography {
+  word-break: break-word;
+}
+
+.typography--variant-h1 {
+  font-size: 6rem;
+  font-weight: 500;
+}
+
+.typography--variant-h2 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.typography--variant-h3 {
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+
+.typography--variant-h4 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+}
+
+.typography--variant-h5 {
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+.typography--variant-h6 {
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+.typography--variant-subheading1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.typography--variant-subheading2 {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.typography--variant-body1 {
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+}
+
+.typography--variant-body2 {
+  font-size: 1rem;
+}
+
+.typography--color-primary {
+  color: var(--color-primary);
+}
+
+.typography--color-secondary {
+  color: var(--color-secondary);
+}
+
+.typography--color-link {
+  color: var(--color-link);
+}
+
+.typography--color-yellow {
+  color: var(--color-yellow);
+}
+
+.typography--color-error {
+  color: var(--color-error);
+}
+
+.typography--color-white {
+  color: #ffffff;
+}
+
+.typography--bold {
+  font-weight: 500;
+}
+
+.typography--uppercase {
+  text-transform: uppercase;
+}
+
+.typography--capitalize {
+  text-transform: capitalize;
+}

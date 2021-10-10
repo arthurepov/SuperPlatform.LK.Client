@@ -7,11 +7,11 @@ import s from './organization-count.module.scss';
 const titles = ['организация', 'организации', 'организаций'];
 
 interface IOrganizationCount {
-    count: number;
+  count: number;
 }
 
 export const OrganizationCount: React.FC<IOrganizationCount> = ({ count }) => (
-    <div className={s.wrap}>
-        {`${count} ${declensionOfNumber(count, titles)}`}
-    </div>
+  <div className={s.wrap}>
+    {`${count} ${declensionOfNumber(count, titles)}`}
+  </div>
 );

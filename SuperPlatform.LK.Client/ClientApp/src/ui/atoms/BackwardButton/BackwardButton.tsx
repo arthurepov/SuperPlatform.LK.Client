@@ -6,13 +6,22 @@ import s from './BackwardButton.module.scss';
 
 type Ref = HTMLDivElement;
 interface BackwardButtonProps {
-    text: string;
-    onClick: () => void;
+  text: string;
+  onClick: () => void;
 }
 
-export const BackwardButton = forwardRef<Ref, BackwardButtonProps>(({ text, onClick }, ref) => (
-    <div ref={ref} className={s.button} title="Назад" onClick={onClick}>
-        <BackwardArrowSvg />
-        <div>{text}</div>
+export const BackwardButton = forwardRef<Ref, BackwardButtonProps>(
+  ({ text, onClick }, ref) => (
+    <div
+      ref={ref}
+      role="button"
+      tabIndex={0}
+      className={s.button}
+      title="Назад"
+      onClick={onClick}
+    >
+      <BackwardArrowSvg />
+      <div>{text}</div>
     </div>
-));
+  )
+);

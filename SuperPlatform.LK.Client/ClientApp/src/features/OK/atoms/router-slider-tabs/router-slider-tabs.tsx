@@ -7,37 +7,34 @@ import { $OCardStore } from '../../model';
 import s from './router-slider-tabs.module.scss';
 
 export const RouterSlilderTabs: React.FC = () => {
-    const { directions } = useStore($OCardStore);
-    const wrapRef = useRef(null);
+  const { directions } = useStore($OCardStore);
+  const wrapRef = useRef(null);
 
-    useEffect(() => {
-        if (wrapRef.current) {
-            const wrap = wrapRef.current;
-            const activeElem = wrap.querySelector('a[aria-current="page"]');
+  useEffect(() => {
+    if (wrapRef.current) {
+      const wrap = wrapRef.current;
+      const activeElem = wrap.querySelector('a[aria-current="page"]');
 
-            activeElem.scrollIntoView({ block: 'center', inline: 'end' });
-        }
-    }, []);
-
-    if (!directions.data) {
-        return null;
+      activeElem.scrollIntoView({ block: 'center', inline: 'end' });
     }
+  }, []);
 
-    return (
-        <div
-            className={s.wrap}
-            ref={wrapRef}
+  if (!directions.data) {
+    return null;
+  }
+
+  return (
+    <div className={s.wrap} ref={wrapRef}>
+      {directions.data.map(({ name, id }) => (
+        <NavLink
+          className={s.item}
+          activeClassName={s.item_active}
+          to={`/directions/${id}`}
+          key={id}
         >
-            {directions.data.map(({ name, id }) => (
-                <NavLink 
-                    className={s.item} 
-                    activeClassName={s.item_active} 
-                    to={`/directions/${id}`}
-                    key={id}
-                >
-                    {name}
-                </NavLink>
-            ))}
-        </div>
-    );
+          {name}
+        </NavLink>
+      ))}
+    </div>
+  );
 };

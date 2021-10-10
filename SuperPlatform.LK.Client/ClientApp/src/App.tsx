@@ -10,27 +10,27 @@ import 'normalize.css';
 import './assets/styles/globalStyles.scss';
 
 export const Application: React.FC = () => {
-    useEffect(() => {
-        getAllFromOCard();
-    }, []);
+  useEffect(() => {
+    getAllFromOCard();
+  }, []);
 
-    return (
-        <>
-            <BrowserRouter>
-                <Pages />
-            </BrowserRouter>
-            <YMInitializer 
-                accounts={[YMID]} 
-                options={{ 
-                    defer: true,
-                    clickmap: true,
-                    trackLinks: true,
-                    accurateTrackBounce: true,
-                    webvisor: true,
-                    trackHash: true,
-                }} 
-                version="2"
-            />
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Pages />
+      </BrowserRouter>
+      <YMInitializer
+        accounts={[YMID]}
+        options={{
+          defer: true,
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+          trackHash: true,
+        }}
+        version="2"
+      />
+    </>
+  );
 };
