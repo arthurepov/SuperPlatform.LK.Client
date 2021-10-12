@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useStore } from 'effector-react';
 
 import { NavLink } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { $OCardStore } from '../../model';
 
 import s from './router-slider-tabs.module.scss';
 
-export const RouterSlilderTabs: React.FC = () => {
+export const RouterSlilderTabs: FC = () => {
   const { directions } = useStore($OCardStore);
   const wrapRef = useRef(null);
 

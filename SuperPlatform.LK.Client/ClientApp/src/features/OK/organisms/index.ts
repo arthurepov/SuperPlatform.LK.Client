@@ -7,3 +7,4 @@ export * from './organization-page';
 export * from './map-page';
 export * from './all-organizations-map-page';
 export * from './all-hobbies-page';
+export * from './signed-page';

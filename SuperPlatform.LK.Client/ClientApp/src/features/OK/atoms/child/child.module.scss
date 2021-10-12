@@ -1,8 +1,9 @@
 .root {
   display: flex;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
 
   & + .root {
-    margin-top: 1.75rem;
     position: relative;
 
     &:after {
@@ -12,7 +13,7 @@
       height: 1px;
       left: 3.5rem;
       right: 0;
-      top: -0.9rem;
+      top: 0;
     }
   }
 }

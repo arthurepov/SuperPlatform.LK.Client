@@ -9,6 +9,7 @@ import {
   AllOrganizationsMapPage,
   DirectionPage,
   AllHobbiesPage,
+  SignedPage,
 } from '../features';
 
 export const ROUTES = [
@@ -48,6 +49,10 @@ export const ROUTES = [
   {
     path: '/ocmap',
     component: MapPage,
+  },
+  {
+    path: '/signed',
+    component: SignedPage,
   },
   {
     path: '*',

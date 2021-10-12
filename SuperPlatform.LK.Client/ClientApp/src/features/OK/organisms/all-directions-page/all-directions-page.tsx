@@ -9,8 +9,7 @@ import {
   SliderList,
   WrapList,
 } from '../../molecules';
-import { NoData } from '../../atoms';
-
+import { HeaderTabs, NoData } from '../../atoms';
 import s from './all-directions-page.module.scss';
 
 export const AllDirectionsPage: FC = () => {
@@ -64,7 +63,12 @@ export const AllDirectionsPage: FC = () => {
 
   return (
     <MainTemplate
-      header={<h1 className={s.main_title}>Дополнительное образование</h1>}
+      header={
+        <>
+          <h1 className={s.main_title}>Дополнительное образование</h1>
+          <HeaderTabs />
+        </>
+      }
     >
       <div className={s.wrap}>
         <div className={s.search}>

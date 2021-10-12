@@ -5,3 +5,4 @@ export * from './no-data';
 export * from './metro-station';
 export * from './age-preview';
 export * from './child';
+export * from './header-tabs';
