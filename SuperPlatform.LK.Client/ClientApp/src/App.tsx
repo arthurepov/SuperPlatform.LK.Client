@@ -8,6 +8,7 @@ import { getAllFromOCard } from './features/OK/model';
 
 import 'normalize.css';
 import './assets/styles/globalStyles.scss';
+import { LayoutProvider, PortalProvider } from './libs';
 
 export const Application: React.FC = () => {
   useEffect(() => {
@@ -17,7 +18,11 @@ export const Application: React.FC = () => {
   return (
     <>
       <BrowserRouter>
-        <Pages />
+        <LayoutProvider>
+          <PortalProvider>
+            <Pages />
+          </PortalProvider>
+        </LayoutProvider>
       </BrowserRouter>
       <YMInitializer
         accounts={[YMID]}

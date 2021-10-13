@@ -1,11 +1,12 @@
 .root {
+  width: 100%;
   display: flex;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
+  padding-right: 1.1rem;
+  position: relative;
 
   & + .root {
-    position: relative;
-
     &:after {
       position: absolute;
       content: '';
@@ -23,4 +24,11 @@
   flex-direction: column;
   justify-content: space-between;
   margin-left: 1rem;
+}
+
+.arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -92,19 +92,9 @@ export const OrganizationOrDiscipline: React.FC<IOrganizationOrDiscipline> = ({
       </div>
     )}
     {!organizationPage && (
-      <a
-        href={`tel:${formatStringToPhoneLink(phone)}`}
-        onClick={() =>
-          YMPhoneClick({
-            phone_number: phone,
-            discipline: discipline_name,
-            city: 'Альметьевск',
-            company_name: organization_name,
-          })
-        }
-      >
+      <Link to="/sign/1">
         <Button style={{ marginTop: '1rem' }}>Записаться</Button>
-      </a>
+      </Link>
     )}
   </div>
 );
