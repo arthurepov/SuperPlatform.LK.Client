@@ -88,7 +88,7 @@ export const AllDirectionsPage: FC = () => {
             onChange={({ target: { value } }) => selectCity(Number(value))}
           />
         </div>
-        {directions.data?.length > 0 && !query?.length && (
+        {!query?.length && (
           <AsyncWrap
             state={{
               loading,

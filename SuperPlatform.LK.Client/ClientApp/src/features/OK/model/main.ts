@@ -37,7 +37,7 @@ export const getChildren = createEvent();
 
 // Effects
 export const getDirectionsFx = createEffect(async () => {
-  const res = await fetch(OK_HOST_URL + OK_DIRECTIONS_URL);
+  const res = await fetch('/api/v1/Directions');
 
   return res.json();
 });
@@ -68,6 +68,20 @@ export const getCitiesFx = createEffect(async () => {
 
 export const getChildrenFx = createEffect(async () => {
   const res = await fetch(CHILDREN_URL);
+  // return [
+  //   {
+  //     avatar:
+  //       'https://obrkartadev.netimob.com/content/avatars/4e66d2448ade6bf1815350e678fac54d03e475f7.jpg',
+  //     fullName: 'Семенова Арина Андреевна',
+  //     id: 'QFnd3gcHw+DWpcmi7KEtlw==',
+  //   },
+  //   {
+  //     avatar:
+  //       'https://obrkartadev.netimob.com/content/avatars/4e66d2448ade6bf1815350e678fac54d03e475f7.jpg',
+  //     fullName: 'Семенова Арина Артуровна',
+  //     id: 'QFnd3gcHw+DWpcmi7KEtls==',
+  //   },
+  // ];
 
   return res.json();
 });
@@ -284,7 +298,7 @@ sample({
 });
 
 $directions
-  .on(getDirectionsFx.doneData, (_, data) => ({ data, error: null }))
+  .on(getDirectionsFx.doneData, (_, { data }) => ({ data, error: null }))
   .on(getDirectionsFx.failData, ({ data }, { message }) => ({
     data,
     error: message,

@@ -65,14 +65,16 @@ export const WrapList: React.FC<IWrapList> = ({
               >
                 <div className={s.item_block}>
                   <img
-                    src={photo?.[0] ? OK_HOST_URL + photo[0].url : scienceUrl}
+                    src={photo?.[0] ? photo[0].url : scienceUrl}
                     alt={name}
                   />
                   {organizationsCount !== 0 && (
                     <OrganizationCount count={organizationsCount} />
                   )}
                 </div>
-                {(ageMin || ageMax) && <span>{renderAge(ageMin, ageMax)}</span>}
+                {(ageMin !== undefined || ageMax !== undefined) && (
+                  <span>{renderAge(ageMin, ageMax)}</span>
+                )}
                 <Typography variant="h2">{name}</Typography>
               </Link>
             )

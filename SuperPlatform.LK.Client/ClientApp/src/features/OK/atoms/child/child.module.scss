@@ -3,7 +3,6 @@
   display: flex;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
-  padding-right: 1.1rem;
   position: relative;
 
   & + .root {
@@ -28,7 +27,7 @@
 
 .arrow {
   position: absolute;
-  right: 1rem;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
 }

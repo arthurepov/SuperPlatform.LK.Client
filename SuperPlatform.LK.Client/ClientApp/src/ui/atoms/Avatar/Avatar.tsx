@@ -4,12 +4,13 @@ import cn from 'classnames';
 import s from './Avatar.module.scss';
 
 enum Variant {
+  XS = 'XS',
   S = 'S',
   M = 'M',
   L = 'L',
 }
 
-type VariantType = 'S' | 'M' | 'L';
+type VariantType = 'XS' | 'S' | 'M' | 'L';
 
 interface AvatarProps {
   className?: string;
@@ -21,6 +22,7 @@ interface AvatarProps {
 export const Avatar = memo<AvatarProps>(
   ({ variant = Variant.M, src, alt, className, ...props }) => {
     const avatarClassName = cn(s.avatar, {
+      [s.extraSmall]: variant === Variant.XS,
       [s.small]: variant === Variant.S,
       [s.medium]: variant === Variant.M,
       [s.large]: variant === Variant.L,

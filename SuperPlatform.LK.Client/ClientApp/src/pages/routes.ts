@@ -11,6 +11,8 @@ import {
   AllHobbiesPage,
   SignedPage,
   SignPage,
+  ChildPage,
+  SignedSectionPage,
 } from '../features';
 
 export const ROUTES = [
@@ -52,12 +54,20 @@ export const ROUTES = [
     component: MapPage,
   },
   {
+    path: '/signed/:sectionId',
+    component: SignedSectionPage,
+  },
+  {
     path: '/signed',
     component: SignedPage,
   },
   {
     path: '/sign/:sectionGroupId',
     component: SignPage,
+  },
+  {
+    path: '/child/:id',
+    component: ChildPage,
   },
   {
     path: '*',

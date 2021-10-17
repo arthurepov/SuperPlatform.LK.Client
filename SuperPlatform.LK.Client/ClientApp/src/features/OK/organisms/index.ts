@@ -9,3 +9,5 @@ export * from './all-organizations-map-page';
 export * from './all-hobbies-page';
 export * from './signed-page';
 export * from './sign-page';
+export * from './child-page';
+export * from './signed-section-page';

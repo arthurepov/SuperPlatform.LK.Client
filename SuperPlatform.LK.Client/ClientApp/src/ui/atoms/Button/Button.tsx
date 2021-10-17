@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cn from 'classnames';
-
 import s from './Button.module.scss';
 
 enum Size {
@@ -16,11 +14,12 @@ enum Variant {
   Outline = 'outline',
   Link = 'link',
   Ghost = 'ghost',
+  Warn = 'warn',
 }
 
 type ColorsType = 'xl' | 'l' | 'm' | 's';
 
-type VariantType = 'primary' | 'outline' | 'link' | 'ghost';
+type VariantType = 'primary' | 'outline' | 'link' | 'ghost' | 'warn';
 
 interface ButtonProps {
   children: any;
@@ -29,6 +28,7 @@ interface ButtonProps {
   size?: ColorsType;
   variant?: VariantType;
   className?: string;
+  isWide?: boolean;
   [x: string]: any;
 }
 
@@ -39,9 +39,11 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   size = Size.L,
   variant = Variant.Primary,
+  isWide = false,
   ...rest
 }) => {
   const buttonClassName = cn(s.button, {
+    [s.isWide]: isWide,
     [s.extraLarge]: size === Size.XL,
     [s.large]: size === Size.L,
     [s.medium]: size === Size.M,
@@ -50,6 +52,7 @@ export const Button: React.FC<ButtonProps> = ({
     [s.outline]: variant === Variant.Outline,
     [s.link]: variant === Variant.Link,
     [s.ghost]: variant === Variant.Ghost,
+    [s.warn]: variant === Variant.Warn,
     [className]: className,
   });
 

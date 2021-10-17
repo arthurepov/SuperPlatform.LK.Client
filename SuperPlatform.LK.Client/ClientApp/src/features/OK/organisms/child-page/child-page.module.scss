@@ -1,0 +1,13 @@
+.avatar {
+  margin-left: auto;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > a {
+    width: 100%;
+  }
+}

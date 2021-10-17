@@ -21,8 +21,21 @@ export const isValidAge = (age = 0, min: number, max: number): boolean => {
   return true;
 };
 
-export const renderAge = (ageMin: number, ageMax: number): string =>
-  `${ageMin && `От ${ageMin}`} ${ageMax && `до ${ageMax}`}`;
+export const renderAge = (ageMin?: number, ageMax?: number): string | null => {
+  if (ageMax && ageMin) {
+    return `${ageMin && `От ${ageMin}`} ${ageMax && `до ${ageMax}`}`;
+  }
+
+  if (ageMax) {
+    return `До ${ageMax}`;
+  }
+
+  if (ageMin) {
+    return `До ${ageMin}`;
+  }
+
+  return null;
+};
 
 export const YMPhoneClick = ({
   phone_number,

@@ -20,7 +20,10 @@ interface IAsyncWrap {
 }
 
 const DefaultErrorComponent: React.FC<IErrorProps> = ({ error }) => (
-  <p>ERROR! {error}</p>
+  <div>
+    <div>ERROR!</div>
+    <div>{error}</div>
+  </div>
 );
 
 const DefaultLoadingComponent: React.FC = () => (
