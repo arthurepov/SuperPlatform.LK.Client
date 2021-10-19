@@ -1,0 +1,21 @@
+.wrap {
+    position: relative;
+    margin-left: 0.8rem;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.8rem;
+    line-height: 0.9rem;
+    color: #9E9E9E;
+
+    &:before {
+        width: 0.4rem;
+        height: 0.4rem;
+        position: absolute;
+        content: '';
+        left: -0.5rem;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #E7294A;
+        border-radius: 50%;
+    }
+}

@@ -1,0 +1,25 @@
+.button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    & > svg {
+        transition: all .2s ease-in-out;
+    }
+
+    &:hover {
+        & > svg {
+            transform: scale(.8);
+        }
+    }
+}
+
+.text {
+    margin-left: 16px;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

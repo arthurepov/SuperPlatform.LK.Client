@@ -1,0 +1,33 @@
+.root {
+  width: 100%;
+  display: flex;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  position: relative;
+
+  & + .root {
+    &:after {
+      position: absolute;
+      content: '';
+      background-color: rgba(0, 0, 0, 0.12);
+      height: 1px;
+      left: 3.5rem;
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 1rem;
+}
+
+.arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

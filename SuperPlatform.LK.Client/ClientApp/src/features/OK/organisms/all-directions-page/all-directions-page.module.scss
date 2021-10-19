@@ -1,0 +1,79 @@
+.main_title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    color: #212121;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.search {
+    margin-bottom: 1.2rem;
+}
+
+.loader {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    & > * {
+        & + * {
+            margin-top: 1rem;
+        }
+    }
+}
+
+.city {
+    margin-bottom: 1.3rem;
+}
+
+.hobbies {
+    margin-bottom: 1rem;
+}
+
+.organizations {
+    margin-top: 1rem;
+}
+
+.disciplines {
+    background-color: #F5F7FA;
+    padding-top: 0.3rem;
+    padding-bottom: 1rem;
+    margin-bottom: -1rem;
+    flex: 1;
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: '';
+        width: 100vw;
+        height: 100%;
+        top: 0;
+        left: calc(((100vw - 100%) / -2));
+        background-color: #F5F7FA;
+        z-index: -1;
+    }
+}
+
+.nothing {
+    width: 100%;
+    min-height: calc(100vh - 15rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

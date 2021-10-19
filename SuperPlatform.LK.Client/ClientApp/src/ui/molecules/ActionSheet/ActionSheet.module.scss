@@ -1,0 +1,189 @@
+.root {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    pointer-events: auto;
+
+    &_closed {
+        pointer-events: none;
+    }
+
+    &_withoutPointerEvents {
+        pointer-events: none;
+    }
+}
+
+.overlay {
+    flex: 1 1 0%;
+    opacity: .6;
+    background-color: var(--color-overlay);
+    transition: opacity 300ms ease-in-out;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    will-change: opacity;
+
+    &_closed {
+        opacity: 0;
+    }
+
+    &_displayNone {
+        display: none;
+    }
+}
+
+.content {
+    position: absolute;
+    bottom: -100%;
+    box-sizing: border-box;
+    padding: 60px 16px 12px;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-modal);
+    transition: transform 300ms cubic-bezier(.59, .18, .01, 1.05);
+    will-change: transform;
+    contain: strict;
+
+    &::before {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+        background-color: var(--color-modal);
+        pointer-events: none;
+    }
+
+    .root_withoutPointerEvents & {
+        pointer-events: auto;
+    }
+
+    &_locked::before {
+        height: 100%;
+        opacity: .56;
+        pointer-events: auto;
+    }
+
+    &_closed {
+        transform: translateY(0);
+    }
+
+    &_isDragging {
+        transition: none;
+    }
+
+    &_webview {
+        padding: 0;
+        min-height: 300px;
+    }
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    padding: 12px 0 8px;
+
+    &_withSwipeBackground {
+        background: var(--color-modal);
+    }
+
+    &_withShadow:not(&_webview) {
+        box-shadow: 0 4px 8px 0 rgba(5, 19, 25, .1);
+    }
+
+    &_webview {
+        padding: 12px 0 8px;
+    }
+}
+
+.title {
+    position: relative;
+    z-index: 2;
+    padding: 24px 16px 12px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #B4B4B4;
+}
+
+.icon {
+    height: 10px;
+    opacity: .4;
+    text-align: center;
+}
+
+.bodyWrapper {
+    touch-action: none;
+    position: relative;
+
+    &_withoutOverlay {
+        position: relative;
+    }
+}
+
+.scrollableWrapper {
+    touch-action: pan-y;
+    overflow: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+
+    &_withScroll {
+        overflow-y: scroll;
+    }
+}
+
+.body_withPaddingBottom {
+    padding-bottom: 32px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+    width: 100%;
+    transition: opacity 300ms ease-in-out;
+    will-change: opacity;
+
+    & > div::before {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+        background-color: var(--color-modal);
+        pointer-events: none;
+    }
+
+    &_locked > div::before {
+        height: 100%;
+        pointer-events: auto;
+        opacity: .56;
+    }
+
+    &_visible {
+        opacity: 1;
+    }
+}

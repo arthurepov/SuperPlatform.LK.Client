@@ -1,0 +1,34 @@
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  position: relative;
+
+  & > p {
+    &:first-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &.withDivider {
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      left: -1rem;
+      right: -1rem;
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+.arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

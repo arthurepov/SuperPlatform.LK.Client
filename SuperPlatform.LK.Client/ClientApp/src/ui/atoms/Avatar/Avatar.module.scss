@@ -1,0 +1,40 @@
+.extraSmall {
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  border-radius: 50%;
+}
+
+.small {
+  width: 2.5rem;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: 50%;
+}
+
+.medium {
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  border-radius: 50%;
+}
+
+.large {
+  width: 10rem;
+  height: 10rem;
+  min-height: 10rem;
+  min-width: 10rem;
+  border-radius: 50%;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-secondary);
+  object-position: center;
+  object-fit: cover;
+}

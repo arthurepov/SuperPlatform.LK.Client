@@ -1,0 +1,63 @@
+$border-focus: #ffcc41;
+
+.wrap {
+    position: relative;
+    width: 100%;
+}
+
+.select {
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.2px;
+    color: #212121;
+    background: #FBFBFB;
+    border: 1px solid #E9E9E9;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    outline: none;
+
+    &:focus {
+        border-color: $border-focus;
+
+        & + div {
+            transform: translateY(-50%) rotateZ(180deg);
+        }
+    }
+}
+
+.caretIcon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.34rem;
+    height: 0.8rem;
+    transition: transform .1s ease-in-out;
+    
+    & > span {
+        display: block;
+        width: 0.8rem;
+        height: 0.1rem;
+        border-radius: 0.2rem;
+        background-color: #9E9E9E;
+        position: absolute;
+        top: 50%;
+        transition: all .1s ease-in-out;
+
+        &:first-child {
+            left: 0.2px;
+            transform: rotateZ(45deg);
+        }
+
+        &:last-child {
+            right: 0.2px;
+            transform: rotateZ(-45deg);
+        }
+    }
+}
