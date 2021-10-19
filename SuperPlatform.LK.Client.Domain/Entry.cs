@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SuperPlatform.LK.Client.Domain.Abstractions;
 using SuperPlatform.LK.Client.Domain.Children.Services;
+using SuperPlatform.LK.Client.Domain.Directions.Services;
+using SuperPlatform.LK.Client.Domain.Disciplines.Services;
 using SuperPlatform.LK.Client.Domain.Sections.Services;
 
 namespace SuperPlatform.LK.Client.Domain
@@ -17,6 +19,8 @@ namespace SuperPlatform.LK.Client.Domain
             serviceCollection.AddTransient<ISectionGroupScheduleService, SectionGroupScheduleService>();
             serviceCollection.AddTransient<ISectionGroupScheduleTimeService, SectionGroupScheduleTimeService>();
             serviceCollection.AddTransient<IStrapiChildService, StrapiChildService>();
+            serviceCollection.AddTransient<IDirectionService, DirectionService>();
+            serviceCollection.AddTransient<IDisciplineService, DisciplineService>();
 
             return serviceCollection;
         }

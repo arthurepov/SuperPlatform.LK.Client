@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using SuperPlatform.LK.Client.Domain.Abstractions;
-using SuperPlatform.LK.Client.Domain.Directions.Models;
+using SuperPlatform.LK.Client.Domain.Directions.Services;
 using SuperPlatform.LK.Client.Domain.Sections.Services;
 using SuperPlatform.LK.Client.Extensions;
 using SuperPlatform.LK.Client.Models.Directions;
@@ -21,7 +21,7 @@ namespace SuperPlatform.LK.Client.Controllers
     {
         private IMapper _mapper;
 
-        private readonly IBaseCrudService<Direction> _directionService;
+        private readonly IDirectionService _directionService;
 
         private readonly ISectionService _sectionService;
 
@@ -35,7 +35,7 @@ namespace SuperPlatform.LK.Client.Controllers
 
         public DirectionsController(
             IMapper mapper,
-            IBaseCrudService<Direction> directionService,
+            IDirectionService directionService,
             ISectionService sectionService,
             ISectionGroupService sectionGroupService,
             ISectionGroupChildrenService sectionGroupChildrenService,
@@ -52,9 +52,9 @@ namespace SuperPlatform.LK.Client.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DirectionDto>>> GetAll(int? skip = null, int? take = null)
+        public async Task<ActionResult<PagedList<DirectionDto>>> GetAll(int? skip = null, int? take = null, long? cityId = null)
         {
-            var models = await _directionService.GetAll(skip, take);
+            var models = await _directionService.GetAll(skip, take, cityId);
 
             var mapped = _mapper.Map<IReadOnlyList<DirectionDto>>(models.Data);
 

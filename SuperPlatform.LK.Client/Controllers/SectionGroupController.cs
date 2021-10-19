@@ -70,19 +70,19 @@ namespace SuperPlatform.LK.Client.Controllers
                 OrganizationName = section.Organization.Name,
                 Address = section.Organization.Address,
                 Cost = section.Cost,
-                CostDuration = (int)section.CostDuration,
-                RecordType = (int)section.RecordType,
-                TeacherFullName = $"{section.Teacher?.LastName} {section.Teacher?.FirstName} {section.Teacher?.MiddleName}",
-                TeacherPhoto = teacher?.Photo?.GetAbsoluteUrl(),
+                CostDuration = (int?)section.CostDuration,
+                RecordType = (int?)section.RecordType,
+                TeacherFullName = teacher == null ? string.Empty : $"{section.Teacher?.LastName} {section.Teacher?.FirstName} {section.Teacher?.MiddleName}",
+                TeacherPhoto = teacher == null ? string.Empty : teacher?.Photo?.GetAbsoluteUrl(),
                 SectionGroupSchedules = schedules.Select(x=>new SectionGroupScheduleDto 
                 {
                     Id = x.Id,
                     DayOfWeek = x.DayOfWeek.GetNumberValue(),
-                    SectionGroupScheduleTimes = scheduleTimes.Select(x => new SectionGroupScheduleTimeDto
+                    SectionGroupScheduleTimes = scheduleTimes.Where(y=>y.SectionGroupSchedule.Id == x.Id).Select(y => new SectionGroupScheduleTimeDto
                     {
-                        Id = x.Id,
-                        StartTime = x.StartTime,
-                        EndTime = x.EndTime
+                        Id = y.Id,
+                        StartTime = y.StartTime,
+                        EndTime = y.EndTime
                     })
                     .ToList()
                 })

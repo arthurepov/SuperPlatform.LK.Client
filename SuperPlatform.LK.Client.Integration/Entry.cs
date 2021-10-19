@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SuperPlatform.LK.Client.Domain.Abstractions;
 using SuperPlatform.LK.Client.Domain.Children.Repositories;
+using SuperPlatform.LK.Client.Domain.Directions.Repositories;
+using SuperPlatform.LK.Client.Domain.Disciplines.Repositories;
 using SuperPlatform.LK.Client.Domain.Sections.Repositories;
 using SuperPlatform.LK.Client.Integration.Abstractions;
 using SuperPlatform.LK.Client.Integration.Extensions;
@@ -36,6 +38,8 @@ namespace SuperPlatform.LK.Client.Integration
             serviceCollection.AddTransient<ISectionGroupScheduleRepository, SectionGroupScheduleRepository>();
             serviceCollection.AddTransient<ISectionGroupScheduleTimeRepository, SectionGroupScheduleTimeRepository>();
             serviceCollection.AddTransient<IStrapiChildRepository, StrapiChildRepository>();
+            serviceCollection.AddTransient<IDirectionRepository, DirectionRepository>();
+            serviceCollection.AddTransient<IDisciplineRepository, DisciplineRepository>();
 
             ImageMediaExtensions.Configure(strapiSettings);
 

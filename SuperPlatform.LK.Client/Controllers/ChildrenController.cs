@@ -61,10 +61,15 @@ namespace SuperPlatform.LK.Client.Controllers
         public async Task<ActionResult<IReadOnlyList<ChildDto>>> Get()
         {
             var token = await HttpContext.GetTokenAsync("access_token");
-            var data = await _childService.GetByToken(token);
-            var dto = _mapper.Map<IReadOnlyList<ChildDto>>(data);
+            var children = await _childService.GetByToken(token);
+            var childrenDto = _mapper.Map<IReadOnlyList<ChildDto>>(children);
+           
+            foreach(var child in childrenDto)
+            {
+                child.Sections = (await GetChildSections(child.Id)).Value;
+            }
 
-            return Ok(dto);
+            return Ok(childrenDto);
         }
 
         [HttpPost("{id}/sections")]
@@ -106,7 +111,7 @@ namespace SuperPlatform.LK.Client.Controllers
         }
 
         [HttpGet("{id}/sectionGroups/count")]
-        public async Task<ActionResult<int>> GetChildSectionGroups([FromRoute] string id)
+        public async Task<ActionResult<int>> GetChildSectionCount([FromRoute] string id)
         {
             var strapiChild = await GetStrapiChildByChildId(id);
             if (strapiChild == null)
@@ -121,8 +126,8 @@ namespace SuperPlatform.LK.Client.Controllers
             return Ok(count);
         }
 
-        [HttpGet("{id}/sectionGroups")]
-        public async Task<ActionResult<IReadOnlyList<SectionShortDto>>> GetChildSectionCount([FromRoute] string id)
+        [HttpGet("{id}/sections")]
+        public async Task<ActionResult<IReadOnlyList<SectionShortDto>>> GetChildSections([FromRoute] string id)
         {
             var strapiChild = await GetStrapiChildByChildId(id);
             if (strapiChild == null)
@@ -174,6 +179,12 @@ namespace SuperPlatform.LK.Client.Controllers
 
         private async Task<StrapiChild> GetStrapiChildByChildId(string id)
         {
+            var strapiChild = await _strapiChildService.GetByEducationCardId(id);
+            if(strapiChild != null)
+            {
+                return strapiChild;
+            }
+
             var phone = User.Claims.First(x => x.Type == ClaimTypes.MobilePhone).Value;
             var token = HttpContext.GetTokenAsync("access_token").Result;
             var childs = await _childService.GetByToken(token);
