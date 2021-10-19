@@ -90,22 +90,22 @@ namespace SuperPlatform.LK.Client.Controllers
                     Latitude = section.Organization?.Latitude,
                     RecordType = (int?)section.RecordType,
                     Cost = section.Cost,
-                    CostDuration = (int)section.CostDuration,
+                    CostDuration = (int?)section.CostDuration,
                     PlacesCount = section.MaxPlacesCount,
                     FreePlacesCount = section.MaxPlacesCount - children.Count(),
                     SectionGroups = groups.Select(x => new SectionGroupDto
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        SectionGroupSchedules = schedules.Select(x => new SectionGroupScheduleDto
+                        SectionGroupSchedules = schedules.Where(y=>y.SectionGroup.Id == x.Id).Select(y => new SectionGroupScheduleDto
                         {
-                            Id = x.Id,
-                            DayOfWeek = x.DayOfWeek.GetNumberValue(),
-                            SectionGroupScheduleTimes = scheduleTimes.Select(x=>new SectionGroupScheduleTimeDto 
+                            Id = y.Id,
+                            DayOfWeek = y.DayOfWeek.GetNumberValue(),
+                            SectionGroupScheduleTimes = scheduleTimes.Where(z=>z.SectionGroupSchedule.Id == y.Id).Select(z=>new SectionGroupScheduleTimeDto 
                             {
-                                Id = x.Id,
-                                StartTime = x.StartTime,
-                                EndTime = x.EndTime
+                                Id = z.Id,
+                                StartTime = z.StartTime,
+                                EndTime = z.EndTime
                             })
                             .ToList()
                         })

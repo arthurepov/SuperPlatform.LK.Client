@@ -7,6 +7,7 @@ using SuperPlatform.LK.Client.Domain.Abstractions;
 using SuperPlatform.LK.Client.Domain.Children.Repositories;
 using SuperPlatform.LK.Client.Domain.Directions.Repositories;
 using SuperPlatform.LK.Client.Domain.Disciplines.Repositories;
+using SuperPlatform.LK.Client.Domain.Organizations.Repositories;
 using SuperPlatform.LK.Client.Domain.Sections.Repositories;
 using SuperPlatform.LK.Client.Integration.Abstractions;
 using SuperPlatform.LK.Client.Integration.Extensions;
@@ -40,6 +41,7 @@ namespace SuperPlatform.LK.Client.Integration
             serviceCollection.AddTransient<IStrapiChildRepository, StrapiChildRepository>();
             serviceCollection.AddTransient<IDirectionRepository, DirectionRepository>();
             serviceCollection.AddTransient<IDisciplineRepository, DisciplineRepository>();
+            serviceCollection.AddTransient<IOrganizationRepository, OrganizationRepository>();
 
             ImageMediaExtensions.Configure(strapiSettings);
 

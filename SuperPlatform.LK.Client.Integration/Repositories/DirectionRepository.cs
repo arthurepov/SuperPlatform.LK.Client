@@ -23,7 +23,7 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
             var queryString = GetPagingQueryParams(skip, take);
             if (cityId.HasValue)
             {
-                queryString.Add("sections.Organization.city", cityId.Value.ToString());
+                queryString.Add("disciplines.Sections.Organization.city", cityId.Value.ToString());
             }
 
             var entities = await SendGetRequest<List<Direction>>($"{GetContentUrl()}?{queryString}");
