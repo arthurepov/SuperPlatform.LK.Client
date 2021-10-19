@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,9 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
 
         public async Task<StrapiChild> GetByEducationCardId(string educationCardId)
         {
-            return await SendGetRequest<StrapiChild>($"{GetContentUrl()}?EducationCardChildId={educationCardId}");
+            var list = await SendGetRequest<List<StrapiChild>>($"{GetContentUrl()}?EducationCardChildId={educationCardId}");
+
+            return list.FirstOrDefault();
         }
     }
 }
