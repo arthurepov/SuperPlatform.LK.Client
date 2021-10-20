@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-left: calc((100vw - 100%) / -2);
+  margin-right: calc((100vw - 100%) / -2);
+  padding: 1rem 1rem 1rem calc((100vw - 100%) / 2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  & > * {
+    max-width: 9.7rem;
+    min-width: 9.7rem;
+
+    & + * {
+      margin-left: 0.8rem;
+    }
+  }
+}

@@ -1,11 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Swiper from 'react-id-swiper';
-import 'swiper/swiper-bundle.css';
-
-import cn from 'classnames';
-
-import { Button } from '../../../../ui';
+import { Button, ScrollableList } from '../../../../ui';
 import s from './slider-list.module.scss';
 import scienceUrl from '../../assets/science.png';
 import { OK_HOST_URL, renderAge } from '../../model';
@@ -29,13 +24,6 @@ export const SliderList: React.FC<ISliderList> = ({
   buttonText,
   pushState,
 }) => {
-  const params = {
-    slidesPerView: 'auto' as const,
-    spaceBetween: 10,
-    containerClass: s.slider,
-    rebuildOnUpdate: true,
-  };
-
   return (
     <>
       {(sliderTitle || buttonText) && (
@@ -48,7 +36,7 @@ export const SliderList: React.FC<ISliderList> = ({
           )}
         </div>
       )}
-      <Swiper {...params}>
+      <ScrollableList>
         {array.map(
           ({ id, name, ageMin, ageMax, photo, organizationsCount = 0 }) => (
             <Link
@@ -56,7 +44,7 @@ export const SliderList: React.FC<ISliderList> = ({
                 pathname: `/disciplines/${id}`,
                 state: pushState,
               }}
-              className={cn(s.item, 'swiper-slide')}
+              className={s.item}
               key={id}
               title={name}
             >
@@ -74,7 +62,7 @@ export const SliderList: React.FC<ISliderList> = ({
             </Link>
           )
         )}
-      </Swiper>
+      </ScrollableList>
     </>
   );
 };

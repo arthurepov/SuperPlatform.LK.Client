@@ -1,12 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Swiper from 'react-id-swiper';
-import 'swiper/swiper-bundle.css';
-
-import cn from 'classnames';
-
-import { Button } from '../../../../ui';
-
+import { Button, ScrollableList } from '../../../../ui';
 import s from './hobby-slider.module.scss';
 
 interface IHobbySlider {
@@ -28,13 +22,6 @@ export const HobbySlider: React.FC<IHobbySlider> = ({
   array,
   pushState,
 }) => {
-  const params = {
-    slidesPerView: 'auto' as const,
-    spaceBetween: 10,
-    containerClass: s.slider,
-    rebuildOnUpdate: true,
-  };
-
   return (
     <>
       <div className={s.header}>
@@ -45,14 +32,14 @@ export const HobbySlider: React.FC<IHobbySlider> = ({
           </Button>
         )}
       </div>
-      <Swiper {...params}>
+      <ScrollableList>
         {array.map(({ name, address, organizationName, disciplineId }) => (
           <Link
             to={{
               pathname: `/disciplines/${disciplineId}`,
               state: pushState,
             }}
-            className={cn(s.item, 'swiper-slide')}
+            className={s.item}
             key={name + address}
           >
             <div>
@@ -62,7 +49,7 @@ export const HobbySlider: React.FC<IHobbySlider> = ({
             </div>
           </Link>
         ))}
-      </Swiper>
+      </ScrollableList>
     </>
   );
 };
