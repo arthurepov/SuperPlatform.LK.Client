@@ -38,5 +38,14 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
 
             return new PagedList<Organization>(entities, totalCount);
         }
+
+        public async Task<List<Organization>> Suggestion(string query)
+        {
+            var queryString = $"name_contains={query}";
+
+            var entities = await SendGetRequest<List<Organization>>($"{GetContentUrl()}?{queryString}");
+
+            return entities;
+        }
     }
 }
