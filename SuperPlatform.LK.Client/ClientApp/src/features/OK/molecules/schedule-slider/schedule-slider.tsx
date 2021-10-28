@@ -1,12 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
-import Swiper from 'react-id-swiper';
-
 import cn from 'classnames';
 import uuid from 'uuid/dist/v4';
-
-import 'swiper/swiper-bundle.css';
 import s from './schedule-slider.module.scss';
 import { WEEK_DAYS_SHORT_NAME } from '../../model';
+import { ScrollableList } from '../../../../ui';
 
 interface IScheduleSlider {
   array: {
@@ -25,17 +22,6 @@ const ONE_WEEK = 7;
 
 export const ScheduleSlider: React.FC<IScheduleSlider> = memo(({ array }) => {
   const [data, setData] = useState(null);
-  const params = {
-    slidesPerView: 'auto' as const,
-    spaceBetween: 10,
-    containerClass: s.slider,
-    rebuildOnUpdate: true,
-    breakpoints: {
-      400: {
-        noSwiping: true,
-      },
-    },
-  };
 
   useEffect(() => {
     setData(
@@ -55,10 +41,10 @@ export const ScheduleSlider: React.FC<IScheduleSlider> = memo(({ array }) => {
   }, []);
 
   return (
-    <Swiper {...params}>
+    <ScrollableList>
       {data?.map(({ timeStart, timeEnd, id }, index) => (
         <div
-          className={cn(s.item, 'swiper-slide', {
+          className={cn(s.item, {
             [s.inactive]: !timeStart || !timeEnd,
           })}
           key={id}
@@ -71,6 +57,6 @@ export const ScheduleSlider: React.FC<IScheduleSlider> = memo(({ array }) => {
           </div>
         </div>
       ))}
-    </Swiper>
+    </ScrollableList>
   );
 });

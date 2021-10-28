@@ -24,10 +24,6 @@
     height: auto;
     text-decoration: none;
 
-    &:first-child {
-        margin-left: 1rem;
-    }
-
     & > * {
         display: flex;
         flex-direction: column;

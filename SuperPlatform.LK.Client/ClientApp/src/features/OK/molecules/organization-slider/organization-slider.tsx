@@ -1,13 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Swiper from 'react-id-swiper';
-import 'swiper/swiper-bundle.css';
-
-import cn from 'classnames';
-
-import { Button } from '../../../../ui';
+import { Button, ScrollableList } from '../../../../ui';
 import { MetroStation } from '../../atoms';
-
 import s from './organization-slider.module.scss';
 
 interface IOrganizationSlider {
@@ -24,13 +18,6 @@ export const OrganizationSlider: React.FC<IOrganizationSlider> = ({
   array,
   pushState,
 }) => {
-  const params = {
-    slidesPerView: 'auto' as const,
-    spaceBetween: 10,
-    containerClass: s.slider,
-    rebuildOnUpdate: true,
-  };
-
   return (
     <>
       <div className={s.header}>
@@ -41,14 +28,14 @@ export const OrganizationSlider: React.FC<IOrganizationSlider> = ({
           </Button>
         )}
       </div>
-      <Swiper {...params}>
+      <ScrollableList>
         {array.map(({ id, name, address, station }) => (
           <Link
             to={{
               pathname: `/organizations/${id}`,
               state: pushState,
             }}
-            className={cn(s.item, 'swiper-slide')}
+            className={s.item}
             key={id}
           >
             <div>
@@ -62,7 +49,7 @@ export const OrganizationSlider: React.FC<IOrganizationSlider> = ({
             </div>
           </Link>
         ))}
-      </Swiper>
+      </ScrollableList>
     </>
   );
 };
