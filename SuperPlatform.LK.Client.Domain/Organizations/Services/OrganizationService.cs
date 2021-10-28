@@ -15,7 +15,7 @@ namespace SuperPlatform.LK.Client.Domain.Organizations.Services
             return await ((IOrganizationRepository)Repository).GetAll(skip, take, cityId, directionId);
         }
 
-        public async Task<List<Organization>> Suggestion(string query)
+        public async Task<IReadOnlyList<Organization>> Suggestion(string query)
         {
             return await ((IOrganizationRepository)Repository).Suggestion(query);
         }

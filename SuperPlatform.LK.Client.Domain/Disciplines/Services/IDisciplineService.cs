@@ -9,6 +9,6 @@ namespace SuperPlatform.LK.Client.Domain.Disciplines.Services
     {
         Task<PagedList<Discipline>> GetAll(int? skip, int? take, long? cityId, long? directionId);
 
-        Task<List<Discipline>> Suggestion(string query);
+        Task<IReadOnlyList<Discipline>> Suggestion(string query);
     }
 }

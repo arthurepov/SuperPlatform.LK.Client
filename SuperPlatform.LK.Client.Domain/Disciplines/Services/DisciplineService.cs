@@ -15,7 +15,7 @@ namespace SuperPlatform.LK.Client.Domain.Disciplines.Services
             return await ((IDisciplineRepository)Repository).GetAll(skip, take, cityId, directionId);
         }
 
-        public async Task<List<Discipline>> Suggestion(string query)
+        public async Task<IReadOnlyList<Discipline>> Suggestion(string query)
         {
             return await ((IDisciplineRepository)Repository).Suggestion(query);
         }

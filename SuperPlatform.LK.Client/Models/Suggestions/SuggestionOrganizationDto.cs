@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SuperPlatform.LK.Client.Models.Medias;
 
 namespace SuperPlatform.LK.Client.Models.Suggestions
 {
@@ -11,6 +8,6 @@ namespace SuperPlatform.LK.Client.Models.Suggestions
 
         public string Name { get; set; }
 
-        public string PhotoUrl { get; set; }
+        public ImageMediaDto Image { get; set; }
     }
 }

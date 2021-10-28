@@ -18,6 +18,15 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
           ILogger<SectionRepository> logger) : base(clientFactory, strapiClientSettings, logger)
         { }
 
+        public async Task<IReadOnlyList<Section>> GetByOrganization(long organizationId)
+        {
+            var queryString = $"Organization={organizationId}";
+
+            var entities = await SendGetRequest<List<Section>>($"{GetContentUrl()}?{queryString}");
+
+            return entities;
+        }
+
         public async Task<PagedList<Section>> GetByDirection(long directionId, int? skip, int? take)
         {
             var queryString = GetPagingQueryParams(skip, take);
@@ -28,6 +37,15 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
             var totalCount = await GetTotalCount(queryString);
 
             return new PagedList<Section>(entities, totalCount);
+        }
+
+        public async Task<IReadOnlyList<Section>> Suggestion(string query)
+        {
+            var queryString = $"Name_contains={query}";
+
+            var entities = await SendGetRequest<List<Section>>($"{GetContentUrl()}?{queryString}");
+
+            return entities;
         }
     }
 }

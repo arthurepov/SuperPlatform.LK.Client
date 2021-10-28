@@ -9,6 +9,6 @@ namespace SuperPlatform.LK.Client.Domain.Organizations.Services
     {
         Task<PagedList<Organization>> GetAll(int? skip, int? take, long? cityId, long? directionId);
 
-        Task<List<Organization>> Suggestion(string query);
+        Task<IReadOnlyList<Organization>> Suggestion(string query);
     }
 }

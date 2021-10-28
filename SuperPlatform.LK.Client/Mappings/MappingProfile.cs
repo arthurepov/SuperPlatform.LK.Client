@@ -5,6 +5,7 @@ using SuperPlatform.LK.Client.Domain.Directions.Models;
 using SuperPlatform.LK.Client.Domain.Disciplines.Models;
 using SuperPlatform.LK.Client.Domain.Medias.Models;
 using SuperPlatform.LK.Client.Domain.Organizations.Models;
+using SuperPlatform.LK.Client.Domain.Sections.Models;
 using SuperPlatform.LK.Client.Integration.Extensions;
 using SuperPlatform.LK.Client.Models.Children;
 using SuperPlatform.LK.Client.Models.Cities;
@@ -12,6 +13,7 @@ using SuperPlatform.LK.Client.Models.Directions;
 using SuperPlatform.LK.Client.Models.Disciplines;
 using SuperPlatform.LK.Client.Models.Medias;
 using SuperPlatform.LK.Client.Models.Organizations;
+using SuperPlatform.LK.Client.Models.Suggestions;
 using System.Linq;
 
 namespace SuperPlatform.LK.Client.Mappings
@@ -35,6 +37,12 @@ namespace SuperPlatform.LK.Client.Mappings
             CreateMap<City, CityDto>();
 
             CreateMap<Organization, OrganizationDto>();
+
+            CreateMap<Discipline, SuggestionDisciplineDto>();
+
+            CreateMap<Organization, SuggestionOrganizationDto>();
+
+            CreateMap<Section, SuggestionSectionDto>();
         }
     }
 }

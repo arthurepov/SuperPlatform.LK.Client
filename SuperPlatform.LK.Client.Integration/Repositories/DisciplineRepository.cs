@@ -38,7 +38,7 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
             return new PagedList<Discipline>(entities, totalCount);
         }
 
-        public async Task<List<Discipline>> Suggestion(string query)
+        public async Task<IReadOnlyList<Discipline>> Suggestion(string query)
         {
             var queryString = $"name_contains={query}";
 

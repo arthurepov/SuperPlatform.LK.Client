@@ -38,13 +38,27 @@ namespace SuperPlatform.LK.Client.Controllers
             _sectionService = sectionService;
         }
 
+        /// <summary>
+        /// Поиск по наименованию
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public async Task<ActionResult<SuggestionResponse>> Suggestion(string query)
         {
+            if (query.Length < 3)
+            {
+                return BadRequest("Длина строки должна быть не меньше 3 символов.");
+            }
+
+            var disciplines = await _disciplineService.Suggestion(query);
+            var organizations = await _organizationService.Suggestion(query);
+            var sections = await _sectionService.Suggestion(query);
+
             var responsew = new SuggestionResponse
             {
-                SuggestionDisciplenes = new List<SuggestionDiscipleneDto> { new SuggestionDiscipleneDto { Id = 1, Name = "Тестовая дисциплина" } },
-                SggestionOrganizations = new List<SuggestionOrganizationDto> { new SuggestionOrganizationDto { Id = 1, Name = "Тестовая организация" } },
-                SuggestionSections = new List<SuggestionSectionDto> { new SuggestionSectionDto { Id = 1, Name = "Тестовая секция" } }
+                SuggestionDisciplenes = _mapper.Map<IReadOnlyList<SuggestionDisciplineDto>>(disciplines),
+                SggestionOrganizations = _mapper.Map<IReadOnlyList<SuggestionOrganizationDto>>(organizations),
+                SuggestionSections = _mapper.Map<IReadOnlyList<SuggestionSectionDto>>(sections)
             };
 
             return Ok(responsew);
