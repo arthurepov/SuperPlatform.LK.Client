@@ -57,7 +57,8 @@ namespace SuperPlatform.LK.Client.Controllers
             return Ok(new PagedList<OrganizationDto>(mapped, models.TotalCount));
         }
 
-        public async Task<ActionResult<OrganizationDetailsDto>> Get(long id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrganizationDetailsDto>> Get([FromRoute] long id)
         {
             var organization = await _organizationService.GetById(id);
 

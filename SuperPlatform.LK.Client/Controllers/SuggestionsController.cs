@@ -43,6 +43,7 @@ namespace SuperPlatform.LK.Client.Controllers
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult<SuggestionResponse>> Suggestion(string query)
         {
             if (query.Length < 3)
