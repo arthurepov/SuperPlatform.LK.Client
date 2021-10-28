@@ -13,7 +13,7 @@ import {
   SignPage,
   ChildPage,
   SignedSectionPage,
-} from '../features';
+} from '../components';
 
 export const ROUTES = [
   {

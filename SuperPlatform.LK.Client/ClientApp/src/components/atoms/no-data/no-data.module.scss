@@ -1,0 +1,20 @@
+@import '../../../assets/styles/variables';
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+        font-family: $rubrik;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        text-align: center;
+        color: #212121;
+    }
+
+    & > button {
+        margin-top: 1.6rem;
+    }
+}
