@@ -3,7 +3,7 @@ import { useStore } from 'effector-react';
 import { useHistory } from 'react-router-dom';
 import { ActionSheet } from '../../../../ui/molecules/ActionSheet';
 import { Child, TextBlock } from '../../atoms';
-import { $OCardStore } from '../../model';
+import { $global } from '../../model';
 import {
   AsyncWrap,
   BackwardButton,
@@ -14,26 +14,21 @@ import {
 import s from './sign-page.module.scss';
 
 export const SignPage: FC = () => {
-  const {
-    children: { data: childrenArray, error },
-    loading,
-  } = useStore($OCardStore);
+  const { children, loading } = useStore($global);
   const [selectedChild, setSelectedChild] = useState(null);
   const [isActionSheetOpened, setActionSheetOpen] = useState(false);
   const history = useHistory();
-  const selectedChildData = childrenArray.find(
-    ({ id }) => id === selectedChild
-  );
+  const selectedChildData = children.find(({ id }) => id === selectedChild);
 
   useEffect(() => {
-    if (childrenArray?.length > 1) {
+    if (children?.length > 1) {
       setActionSheetOpen(true);
     }
 
-    if (childrenArray?.length > 0) {
-      setSelectedChild(childrenArray[0]?.id);
+    if (children?.length > 0) {
+      setSelectedChild(children[0]?.id);
     }
-  }, [childrenArray]);
+  }, [children]);
 
   const openActionSheet = (): void => setActionSheetOpen(true);
   const closeActionSheet = (): void => setActionSheetOpen(false);
@@ -50,7 +45,7 @@ export const SignPage: FC = () => {
     <MainTemplate
       header={<BackwardButton onClick={goBackFunc} text="Запись на занятия" />}
     >
-      <AsyncWrap state={{ loading, error }}>
+      <AsyncWrap state={{ loading }}>
         <>
           <div className={s.wrap}>
             <Typography variant="h4" className={s.subtitle} color="secondary">
@@ -58,7 +53,7 @@ export const SignPage: FC = () => {
             </Typography>
             <Child
               onClick={openActionSheet}
-              withArrow={childrenArray?.length > 1}
+              withArrow={children?.length > 1}
               {...selectedChildData}
               bottomText="3 кружка"
             />
@@ -89,21 +84,23 @@ export const SignPage: FC = () => {
               topText="11:00 – 12:00"
               bottomText="Четверг"
             />
-            {childrenArray?.length > 1 && (
+            {children?.length > 1 && (
               <ActionSheet
                 title="Выберите ребенка"
                 isOpened={isActionSheetOpened}
                 onClose={closeActionSheet}
               >
-                {childrenArray?.map((child) => (
-                  <Child
-                    onClick={() => selectChild(child.id)}
-                    bottomText="3 кружка"
-                    key={child.id}
-                    withArrow={false}
-                    {...child}
-                  />
-                ))}
+                <>
+                  {children?.map((child) => (
+                    <Child
+                      onClick={() => selectChild(child.id)}
+                      bottomText="3 кружка"
+                      key={child.id}
+                      withArrow={false}
+                      {...child}
+                    />
+                  ))}
+                </>
               </ActionSheet>
             )}
           </div>

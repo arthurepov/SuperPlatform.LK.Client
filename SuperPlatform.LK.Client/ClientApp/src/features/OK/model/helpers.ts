@@ -58,3 +58,16 @@ export const saveSelectedCityToStorage = (selectedCityId: number): void =>
   window.localStorage.setItem('selectedCityId', selectedCityId.toString());
 export const getSelectedCityFromStorage = (): number =>
   Number(window.localStorage.getItem('selectedCityId')) ?? null;
+
+export const RECORD_TYPES = ['Индивидуальная', 'Групповая'];
+export const PEREODICITY_TYPES = ['Месяц', 'Неделя', 'Год'];
+export const WEEK_DAYS_SHORT = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+export const WEEK_DAYS_LONG = [
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+  'Воскресенье',
+];

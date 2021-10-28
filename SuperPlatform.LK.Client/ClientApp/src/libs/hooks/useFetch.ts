@@ -9,8 +9,8 @@ interface IUseFetch<T> {
 }
 
 export function useFetch<T>({ url, options, delay }: IRequest): IUseFetch<T> {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<T>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>(null);
   const [stringifiedUrl, stringifiedOptions] = [
     JSON.stringify(url),

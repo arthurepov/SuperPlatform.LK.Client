@@ -1,41 +1,22 @@
-/* eslint-disable no-magic-numbers */
 import { useStore } from 'effector-react';
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Map, Placemark, YMaps, ZoomControl } from 'react-yandex-maps';
-
 import { AsyncWrap, BackwardButton, MainTemplate } from '../../../../ui';
-import { $OCardStore, getAllFromOCard } from '../../model';
-
+import { $global, getData } from '../../model';
 import s from './all-organizations-map-page.module.scss';
 
-// eslint-disable-next-line no-magic-numbers
 const ALMETEVSK_CENTER = [54.8889, 52.3247];
 
 export const AllOrganizationsMapPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const { organizations, disciplines, loading } = useStore($OCardStore);
-  const disciplinesArray =
-    disciplines?.data?.filter(
-      ({ direction }) => direction?.id === Number(id)
-    ) ?? [];
-  const organizationsIdsArray = [
-    ...new Set(
-      disciplinesArray.map(({ organizationsIds }) => organizationsIds).flat()
-    ),
-  ];
-  const organizationsArray =
-    organizations?.data?.filter(({ id: organizationsId }) =>
-      organizationsIdsArray.includes(organizationsId)
-    ) ??
-    organizations.data ??
-    [];
+  const { organizations, loading } = useStore($global);
 
   useEffect(() => {
-    if (organizations.data) return;
+    if (organizations) return;
 
-    getAllFromOCard();
+    getData();
   }, []);
 
   return (
@@ -45,24 +26,20 @@ export const AllOrganizationsMapPage: React.FC = () => {
       <AsyncWrap
         state={{
           loading,
-          error: organizations.error,
         }}
       >
         <YMaps>
           <Map
             className={s.map}
             defaultState={{
-              center: organizationsArray[0]?.latitude
-                ? [
-                    organizationsArray[0].latitude,
-                    organizationsArray[0].longitude,
-                  ]
+              center: organizations[0]?.latitude
+                ? [organizations[0].latitude, organizations[0].longitude]
                 : ALMETEVSK_CENTER,
               zoom: 12,
               controls: [],
             }}
           >
-            {organizationsArray.map(
+            {organizations.map(
               ({
                 id: organizationId,
                 latitude,

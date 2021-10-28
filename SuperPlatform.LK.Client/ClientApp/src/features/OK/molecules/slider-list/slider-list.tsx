@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, ScrollableList } from '../../../../ui';
 import s from './slider-list.module.scss';
 import scienceUrl from '../../assets/science.png';
-import { OK_HOST_URL, renderAge } from '../../model';
+import { HOST_URL, renderAge } from '../../model';
 import { OrganizationCount } from '../../atoms';
 
 interface ISliderList {
@@ -50,7 +50,7 @@ export const SliderList: React.FC<ISliderList> = ({
             >
               <div>
                 <img
-                  src={photo?.[0] ? OK_HOST_URL + photo[0].url : scienceUrl}
+                  src={photo?.[0] ? HOST_URL + photo[0].url : scienceUrl}
                   alt={name}
                 />
                 {organizationsCount !== 0 && (

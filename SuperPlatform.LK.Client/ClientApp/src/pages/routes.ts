@@ -54,7 +54,7 @@ export const ROUTES = [
     component: MapPage,
   },
   {
-    path: '/signed/:sectionId',
+    path: '/signed/:childId/:sectionGroupId',
     component: SignedSectionPage,
   },
   {

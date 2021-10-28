@@ -1,19 +1,19 @@
-export interface IDirection {
-  created_at: Date;
-  disciplines: any[];
+export interface IPhoto {
   id: number;
-  name: string;
-  published_at: Date;
-  updated_at: Date;
+  url: string;
 }
 
-export interface IWrapListArrayItem {
+export interface IDirection {
+  id: number;
   name: string;
   ageMin: number;
   ageMax: number;
-  photo: any[];
+  photo: IPhoto[];
+}
+
+export interface ICity {
   id: number;
-  organizationsCount: number;
+  name: string;
 }
 
 export interface IDiscipline {
@@ -21,23 +21,19 @@ export interface IDiscipline {
   name: string;
   ageMin: number;
   ageMax: number;
-  published_at: Date;
-  created_at: Date;
-  updated_at: Date;
-  direction: IDirection;
+  photo: IPhoto[];
 }
 
 export interface IOrganization {
   id: number;
   name: string;
   address: string;
+  email: string;
   station: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   phone: string;
-  published_at: Date;
-  created_at: Date;
-  updated_at: Date;
+  photo: IPhoto;
 }
 
 export interface ISchedule {
@@ -63,4 +59,39 @@ export interface IChild {
   id: string;
   fullName: string;
   avatar?: string;
+  sections?: {
+    sectionId: number;
+    sectionGroupId: number;
+    sectionName: string;
+    sectionGroupName: string;
+    organizationName: string;
+    disciplineName: string;
+    directionName: string;
+  }[];
+}
+
+export interface ISectionGroup {
+  id: number;
+  name: string;
+  sectionName: string;
+  organizationName: string;
+  address: string;
+  recordType: number;
+  cost: number;
+  costDuration: number;
+  teacherFullName: string;
+  teacherPhoto: string;
+  sectionGroupSchedules: [
+    {
+      id: number;
+      dayOfWeek: number;
+      sectionGroupScheduleTimes: [
+        {
+          id: number;
+          startTime: string;
+          endTime: string;
+        }
+      ];
+    }
+  ];
 }

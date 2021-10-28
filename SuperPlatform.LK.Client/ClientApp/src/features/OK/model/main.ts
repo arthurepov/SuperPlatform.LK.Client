@@ -7,354 +7,137 @@ import {
   sample,
 } from 'effector';
 import { status } from 'patronum';
-import { EffectState } from 'patronum/status';
+import { IChild, ICity, IDirection, IDiscipline, IOrganization } from './types';
 import {
   CHILDREN_URL,
-  OK_CITIES_URL,
-  OK_DIRECTIONS_URL,
-  OK_DISCIPLINES_URL,
-  OK_HOST_URL,
-  OK_ORGANIZATIONS_URL,
-  OK_SCHEDULES_URL,
+  CITIES_URL,
+  DIRECTIONS_URL,
+  HOST_URL,
+  ORGANIZATIONS_URL,
 } from './api';
+import { isPendingEffect } from './helpers';
+import { CHILDREN_MOCK, DIRECTIONS_MOCK } from './mock';
 
-import {
-  getSelectedCityFromStorage,
-  isPendingEffect,
-  saveSelectedCityToStorage,
-} from './helpers';
-import { IChild } from './types';
+const persistedCityId = localStorage.getItem('cityId');
 
-// Events
-export const getDirections = createEvent();
-export const getDisciplines = createEvent();
-export const getOrganizations = createEvent();
-export const getSchedules = createEvent();
-export const getCities = createEvent();
-export const getAllFromOCard = createEvent();
-export const selectCity = createEvent<number>();
-export const getChildren = createEvent();
-
-// Effects
-export const getDirectionsFx = createEffect(async () => {
-  const res = await fetch('/api/v1/Directions');
-
-  return res.json();
-});
-
-export const getDisciplinesFx = createEffect(async () => {
-  const res = await fetch(OK_HOST_URL + OK_DISCIPLINES_URL);
-
-  return res.json();
-});
-
-export const getOrganizationsFx = createEffect(async (cityQuery = '') => {
-  const res = await fetch(OK_HOST_URL + OK_ORGANIZATIONS_URL + cityQuery);
-
-  return res.json();
-});
-
-export const getSchedulesFx = createEffect(async (cityQuery = '') => {
-  const res = await fetch(OK_HOST_URL + OK_SCHEDULES_URL + cityQuery);
-
-  return res.json();
-});
-
-export const getCitiesFx = createEffect(async () => {
-  const res = await fetch(OK_HOST_URL + OK_CITIES_URL);
-
-  return res.json();
-});
+export const getData = createEvent();
+export const setDisciplines =
+  createEvent<{ direction: number; disciplines: IDiscipline[] }>();
+export const setCity = createEvent<number>();
+export const resetDisciplines = createEvent();
 
 export const getChildrenFx = createEffect(async () => {
-  const res = await fetch(CHILDREN_URL);
-  // return [
-  //   {
-  //     avatar:
-  //       'https://obrkartadev.netimob.com/content/avatars/4e66d2448ade6bf1815350e678fac54d03e475f7.jpg',
-  //     fullName: 'Семенова Арина Андреевна',
-  //     id: 'QFnd3gcHw+DWpcmi7KEtlw==',
-  //   },
-  //   {
-  //     avatar:
-  //       'https://obrkartadev.netimob.com/content/avatars/4e66d2448ade6bf1815350e678fac54d03e475f7.jpg',
-  //     fullName: 'Семенова Арина Артуровна',
-  //     id: 'QFnd3gcHw+DWpcmi7KEtls==',
-  //   },
-  // ];
+  return CHILDREN_MOCK; // TODO
 
-  return res.json();
-});
+  const data = await fetch(HOST_URL + CHILDREN_URL);
 
-// Stores
-export const $directions = createStore({
-  data: null,
-  error: null,
+  return data.json();
 });
-export const $disciplines = createStore({
-  data: null,
-  error: null,
+export const getDirectionsFx = createEffect(async (cityId = 1) => {
+  return DIRECTIONS_MOCK; // TODO
+
+  const data = await fetch(`${HOST_URL}${DIRECTIONS_URL}?cityId=${cityId}`);
+
+  return data.json();
 });
-export const $organizations = createStore({
-  data: null,
-  error: null,
+export const getCitiesFx = createEffect(async () => {
+  const data = await fetch(HOST_URL + CITIES_URL);
+
+  return data.json();
 });
-export const $schedules = createStore({
-  data: null,
-  error: null,
-});
-export const $cities = createStore({
-  data: [],
-  error: null,
-});
-export const $hobbies = createStore({
-  data: [],
-  error: null,
-});
-export const $children = createStore<{
-  data: IChild[];
-  error: string | null;
-}>({
-  data: [],
-  error: null,
+export const getOrganizationsFx = createEffect(async () => {
+  const data = await fetch(HOST_URL + ORGANIZATIONS_URL);
+
+  return data.json();
 });
 
-const $directionsStatus = status({
-  effect: getDisciplinesFx,
+const $getCitiesFxStatus = status({
+  effect: getCitiesFx,
   defaultValue: 'pending',
 });
-const $disciplinesStatus = status({
-  effect: getDisciplinesFx,
+const $getDirectionsFxStatus = status({
+  effect: getDirectionsFx,
   defaultValue: 'pending',
 });
-const $organizationsStatus = status({
-  effect: getOrganizationsFx,
-  defaultValue: 'pending',
-});
-const $schedulesStatus = status({
-  effect: getSchedulesFx,
-  defaultValue: 'pending',
-});
-const $citiesStatus = status({ effect: getCitiesFx, defaultValue: 'pending' });
-const $childrenStatus = status({
+const $getChildrenFxStatus = status({
   effect: getChildrenFx,
   defaultValue: 'pending',
 });
 
-export const $selectedCity = createStore<number | null>(null);
+// TODO: пофиксить defaultValue
+const $getOrganizationsFxStatus = status({
+  effect: getOrganizationsFx,
+  defaultValue: 'done',
+});
 
-export const $OCardStore = combine<any>(
-  $directions,
-  $disciplines,
-  $organizations,
-  $schedules,
-  $hobbies,
-  $cities,
-  $selectedCity,
+export const $children = createStore<IChild[]>([]);
+export const $directions = createStore<IDirection[]>([]);
+export const $cities = createStore<ICity[]>([]);
+export const $activeCity = createStore<number>(
+  persistedCityId ? JSON.parse(persistedCityId) : 1
+);
+export const $organizations = createStore<IOrganization[]>([]);
+export const $disciplines = createStore([]);
+export const $global = combine(
   $children,
-  $directionsStatus,
-  $disciplinesStatus,
-  $organizationsStatus,
-  $schedulesStatus,
-  $citiesStatus,
-  $childrenStatus,
+  $directions,
+  $cities,
+  $activeCity,
+  $organizations,
+  $disciplines,
+  $getChildrenFxStatus,
+  $getDirectionsFxStatus,
+  $getCitiesFxStatus,
+  $getOrganizationsFxStatus,
   (
+    children,
     directions,
-    disciplines,
+    cities,
+    activeCity,
     organizations,
-    schedules,
-    hobbies,
-    cities,
-    selectedCity,
-    children,
-    getDirectionsFxStatus,
-    getDisciplinesFxStatus,
-    getOrganizationsFxStatus,
-    getSchedulesFxStatus,
-    getCitiesFxStatus,
-    getChildrenFxStatus
+    disciplines,
+    childrenStatus,
+    directionStatus,
+    citiesStatus,
+    organizationsStatus
   ) => ({
-    directions,
-    disciplines: {
-      ...disciplines,
-      data:
-        disciplines.data
-          ?.filter(({ name, id }) => name !== null && id !== null)
-          ?.filter(({ id }) => {
-            const organizationIds = [
-              ...new Set(
-                schedules?.data?.map(({ disciplineId }) => disciplineId)
-              ),
-            ];
-
-            return organizationIds.includes(id);
-          })
-          .map((discipline) => {
-            const disciplineSchedules =
-              schedules.data?.filter(
-                ({ disciplineId }) => disciplineId === discipline.id
-              ) ?? [];
-            const disciplineOrganizations =
-              disciplineSchedules.map(({ organizationId }) => organizationId) ??
-              [];
-
-            return {
-              ...discipline,
-              organizationsCount: [...new Set(disciplineOrganizations)]?.length,
-              organizationsIds: [...new Set(disciplineOrganizations)],
-            };
-          }) ?? null,
-    },
-    organizations: {
-      ...organizations,
-      data:
-        organizations.data?.filter(
-          ({ name, id }) => name !== null && id !== null
-        ) ?? null,
-    },
-    schedules,
-    hobbies: {
-      ...hobbies,
-      data: [
-        ...new Set(
-          schedules?.data?.map(
-            ({ name, organizationId, address, disciplineId, cityId }) =>
-              JSON.stringify({
-                name,
-                organizationId,
-                address,
-                disciplineId,
-                cityId,
-              })
-          )
-        ),
-      ].map((hobby: string) => {
-        const data = JSON.parse(hobby);
-        const organization = organizations?.data?.find(
-          ({ id }) => id === data?.organizationId
-        );
-
-        return {
-          ...data,
-          organizationName: organization?.name ?? '',
-        };
-      }),
-    },
-    cities,
-    selectedCity,
     children,
+    directions,
+    cities,
+    activeCity,
+    organizations,
+    disciplines,
     loading: [
-      getDirectionsFxStatus,
-      getDisciplinesFxStatus,
-      getOrganizationsFxStatus,
-      getSchedulesFxStatus,
-      getCitiesFxStatus,
-      getChildrenFxStatus,
-    ].some((effectStatus: EffectState) => isPendingEffect(effectStatus)),
+      childrenStatus,
+      directionStatus,
+      citiesStatus,
+      organizationsStatus,
+    ].some(isPendingEffect),
   })
 );
 
-// Logic
-
 forward({
-  from: getDisciplines,
-  to: getDisciplinesFx,
-});
-
-forward({
-  from: getDirections,
-  to: getDirectionsFx,
-});
-
-forward({
-  from: getOrganizations,
-  to: getOrganizationsFx,
-});
-
-forward({
-  from: getSchedules,
-  to: getSchedulesFx,
-});
-
-forward({
-  from: getCities,
-  to: getCitiesFx,
-});
-
-forward({
-  from: getChildren,
-  to: getChildrenFx,
-});
-
-forward({
-  from: getAllFromOCard,
-  to: [getDirectionsFx, getCitiesFx, getDisciplinesFx, getChildrenFx],
+  from: getData,
+  to: [getChildrenFx, getCitiesFx, getDirectionsFx],
 });
 
 sample({
-  source: $selectedCity,
-  fn: (id: number): string => `&cityId=${id}`,
-  target: [getSchedulesFx, getOrganizationsFx, getDisciplinesFx],
+  clock: $activeCity,
+  fn: (cityId) => cityId,
+  target: [getDirectionsFx, resetDisciplines],
 });
 
-$directions
-  .on(getDirectionsFx.doneData, (_, { data }) => ({ data, error: null }))
-  .on(getDirectionsFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
+$activeCity.on(setCity, (state, cityId) => {
+  localStorage.setItem('cityId', JSON.stringify(cityId));
 
+  return cityId;
+});
+$children.on(getChildrenFx.doneData, (state, data) => data);
+$directions.on(getDirectionsFx.doneData, (state, { data }) => data);
+$cities.on(getCitiesFx.doneData, (state, { data }) => data);
 $disciplines
-  .on(getDisciplinesFx.doneData, (_, data) => ({ data, error: null }))
-  .on(getDisciplinesFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
-
-$organizations
-  .on(getOrganizationsFx.doneData, (_, data) => ({ data, error: null }))
-  .on(getOrganizationsFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
-
-$schedules
-  .on(getSchedulesFx.doneData, (_, data) => ({ data, error: null }))
-  .on(getSchedulesFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
-
-$cities
-  .on(getCitiesFx.doneData, (_, data) => ({ data, error: null }))
-  .on(getCitiesFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
-
-$selectedCity
-  .on(selectCity, (_, newCityId) => {
-    saveSelectedCityToStorage(newCityId);
-
-    return newCityId;
-  })
-  .on(getCitiesFx.doneData, (_, data) => {
-    const persisted = getSelectedCityFromStorage();
-
-    if (!persisted) {
-      const firstId = data?.[0]?.id;
-
-      saveSelectedCityToStorage(firstId);
-
-      return firstId;
-    }
-
-    return persisted;
-  });
-
-$children
-  .on(getChildrenFx.doneData, (_, data) => ({ data, error: null }))
-  .on(getChildrenFx.failData, ({ data }, { message }) => ({
-    data,
-    error: message,
-  }));
+  .on(setDisciplines, (state, { direction, disciplines }) => ({
+    ...state,
+    [direction]: disciplines,
+  }))
+  .reset(resetDisciplines);

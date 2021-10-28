@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import { NoData, OrganizationCount, Title } from '../../atoms';
-import { OK_HOST_URL, renderAge } from '../../model';
-
+import { renderAge } from '../../model';
 import scienceUrl from '../../assets/science.png';
-
-import s from './wrap-list.module.scss';
 import { SearchBar, Typography } from '../../../../ui';
+import s from './wrap-list.module.scss';
 
 interface IWrapList {
   array: any[];
@@ -50,9 +47,9 @@ export const WrapList: React.FC<IWrapList> = ({
         </div>
       )}
       <Title>{title}</Title>
-      <div className={s.wrap}>
-        {list?.length > 0 ? (
-          list.map(
+      {list?.length > 0 ? (
+        <div className={s.wrap}>
+          {list.map(
             ({ name, ageMin, ageMax, photo, id, organizationsCount = 0 }) => (
               <Link
                 key={id}
@@ -78,13 +75,13 @@ export const WrapList: React.FC<IWrapList> = ({
                 <Typography variant="h2">{name}</Typography>
               </Link>
             )
-          )
-        ) : (
-          <div className={s.nothing}>
-            <NoData />
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <div className={s.nothing}>
+          <NoData />
+        </div>
+      )}
     </>
   );
 };
