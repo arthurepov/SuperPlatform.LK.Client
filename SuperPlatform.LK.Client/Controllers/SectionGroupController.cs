@@ -49,7 +49,7 @@ namespace SuperPlatform.LK.Client.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult< SectionGroupDetailsDto>> Get([FromRoute] long id)
+        public async Task<ActionResult<SectionGroupDetailsDto>> Get([FromRoute] long id)
         {
             var group = await _sectionGroupService.GetById(id);
             if (group == null)
@@ -67,8 +67,8 @@ namespace SuperPlatform.LK.Client.Controllers
                 Id = group.Id,
                 Name = group.Name,
                 SectionName = section.Name,
-                OrganizationName = section.Organization.Name,
-                Address = section.Organization.Address,
+                OrganizationName = section.Organization.name,
+                Address = section.Organization.address,
                 Cost = section.Cost,
                 CostDuration = (int?)section.CostDuration,
                 RecordType = (int?)section.RecordType,

@@ -6,7 +6,11 @@ namespace SuperPlatform.LK.Client.Domain.Sections.Models
     {
         public string Name { get; set; }
 
+        public string name { get; set; }
+
         public string Address { get; set; }
+
+        public string address { get; set; }
 
         public string Email { get; set; }
 

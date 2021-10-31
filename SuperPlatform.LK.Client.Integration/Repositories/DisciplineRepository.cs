@@ -28,7 +28,7 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
 
             if (directionId.HasValue)
             {
-                queryString.Add("direction.", directionId.Value.ToString());
+                queryString.Add("direction", directionId.Value.ToString());
             }
 
             var entities = await SendGetRequest<List<Discipline>>($"{GetContentUrl()}?{queryString}");

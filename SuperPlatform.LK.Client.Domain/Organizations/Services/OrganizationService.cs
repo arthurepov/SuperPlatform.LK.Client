@@ -6,18 +6,28 @@ using System.Threading.Tasks;
 
 namespace SuperPlatform.LK.Client.Domain.Organizations.Services
 {
-    public class OrganizationService : BaseCrudService<Organization>, IOrganizationService
+    public class OrganizationService : IOrganizationService
     {
-        public OrganizationService(IOrganizationRepository organizationRepository) : base(organizationRepository) { }
+        private readonly IOrganizationRepository _organizationRepository;
+
+        public OrganizationService(IOrganizationRepository organizationRepository) 
+        {
+            _organizationRepository = organizationRepository;
+        }
 
         public async Task<PagedList<Organization>> GetAll(int? skip, int? take, long? cityId, long? directionId)
         {
-            return await ((IOrganizationRepository)Repository).GetAll(skip, take, cityId, directionId);
+            return await _organizationRepository.GetAll(skip, take, cityId, directionId);
         }
 
         public async Task<IReadOnlyList<Organization>> Suggestion(string query)
         {
-            return await ((IOrganizationRepository)Repository).Suggestion(query);
+            return await _organizationRepository.Suggestion(query);
+        }
+
+        public async Task<Organization> GetById(long id)
+        {
+            return await _organizationRepository.GetById(id);
         }
     }
 }

@@ -42,7 +42,9 @@ namespace SuperPlatform.LK.Client.Mappings
 
             CreateMap<Organization, SuggestionOrganizationDto>();
 
-            CreateMap<Section, SuggestionSectionDto>();
+            CreateMap<Section, SuggestionSectionDto>()
+                .ForMember(x => x.OrganizationName, x => x.MapFrom(y => y.Organization.name))
+                .ForMember(x => x.OrganizationAdress, x => x.MapFrom(y => y.Organization.address));
         }
     }
 }

@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace SuperPlatform.LK.Client.Domain.Organizations.Services
 {
-    public interface IOrganizationService : IBaseCrudService<Organization>
+    public interface IOrganizationService
     {
         Task<PagedList<Organization>> GetAll(int? skip, int? take, long? cityId, long? directionId);
 
         Task<IReadOnlyList<Organization>> Suggestion(string query);
+
+        Task<Organization> GetById(long id);
     }
 }
