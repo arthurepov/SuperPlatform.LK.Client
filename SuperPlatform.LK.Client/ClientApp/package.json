@@ -38,6 +38,7 @@
         "react-yandex-maps": "^4.4.0",
         "react-yandex-metrika": "^2.6.0",
         "typescript": "~3.9.7",
+        "use-debounce": "^7.0.0",
         "uuid": "^8.3.1"
     },
     "devDependencies": {

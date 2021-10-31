@@ -7,7 +7,14 @@ import {
   sample,
 } from 'effector';
 import { status } from 'patronum';
-import { IChild, ICity, IDirection, IDiscipline, IOrganization } from './types';
+import {
+  IChild,
+  ICity,
+  IDirection,
+  IDiscipline,
+  IOrganization,
+  ISection,
+} from './types';
 import {
   CHILDREN_URL,
   CITIES_URL,
@@ -16,37 +23,43 @@ import {
   ORGANIZATIONS_URL,
 } from './api';
 import { isPendingEffect } from './helpers';
-import { CHILDREN_MOCK, DIRECTIONS_MOCK } from './mock';
 
 const persistedCityId = localStorage.getItem('cityId');
+
+export const $children = createStore<IChild[]>([]);
+export const $directions = createStore<IDirection[]>([]);
+export const $cities = createStore<ICity[]>([]);
+export const $activeCity = createStore<number>(Number(persistedCityId) || 1);
+export const $organizations = createStore([]);
+export const $disciplines = createStore([]);
+export const $sections = createStore([]);
 
 export const getData = createEvent();
 export const setDisciplines =
   createEvent<{ direction: number; disciplines: IDiscipline[] }>();
 export const setCity = createEvent<number>();
+export const setOrganization =
+  createEvent<{ direction: number; organizations: IOrganization[] }>();
 export const resetDisciplines = createEvent();
+export const resetSections = createEvent();
+export const resetOrganizations = createEvent();
+export const setSections =
+  createEvent<{ direction: number; sections: ISection[] }>();
 
 export const getChildrenFx = createEffect(async () => {
-  return CHILDREN_MOCK; // TODO
-
   const data = await fetch(HOST_URL + CHILDREN_URL);
 
   return data.json();
 });
-export const getDirectionsFx = createEffect(async (cityId = 1) => {
-  return DIRECTIONS_MOCK; // TODO
+export const getDirectionsFx = createEffect(
+  async (cityId = $activeCity.getState()) => {
+    const data = await fetch(`${HOST_URL}${DIRECTIONS_URL}?cityId=${cityId}`);
 
-  const data = await fetch(`${HOST_URL}${DIRECTIONS_URL}?cityId=${cityId}`);
-
-  return data.json();
-});
+    return data.json();
+  }
+);
 export const getCitiesFx = createEffect(async () => {
   const data = await fetch(HOST_URL + CITIES_URL);
-
-  return data.json();
-});
-export const getOrganizationsFx = createEffect(async () => {
-  const data = await fetch(HOST_URL + ORGANIZATIONS_URL);
 
   return data.json();
 });
@@ -64,20 +77,6 @@ const $getChildrenFxStatus = status({
   defaultValue: 'pending',
 });
 
-// TODO: пофиксить defaultValue
-const $getOrganizationsFxStatus = status({
-  effect: getOrganizationsFx,
-  defaultValue: 'done',
-});
-
-export const $children = createStore<IChild[]>([]);
-export const $directions = createStore<IDirection[]>([]);
-export const $cities = createStore<ICity[]>([]);
-export const $activeCity = createStore<number>(
-  persistedCityId ? JSON.parse(persistedCityId) : 1
-);
-export const $organizations = createStore<IOrganization[]>([]);
-export const $disciplines = createStore([]);
 export const $global = combine(
   $children,
   $directions,
@@ -85,10 +84,10 @@ export const $global = combine(
   $activeCity,
   $organizations,
   $disciplines,
+  $sections,
   $getChildrenFxStatus,
   $getDirectionsFxStatus,
   $getCitiesFxStatus,
-  $getOrganizationsFxStatus,
   (
     children,
     directions,
@@ -96,10 +95,10 @@ export const $global = combine(
     activeCity,
     organizations,
     disciplines,
+    sections,
     childrenStatus,
     directionStatus,
-    citiesStatus,
-    organizationsStatus
+    citiesStatus
   ) => ({
     children,
     directions,
@@ -107,12 +106,10 @@ export const $global = combine(
     activeCity,
     organizations,
     disciplines,
-    loading: [
-      childrenStatus,
-      directionStatus,
-      citiesStatus,
-      organizationsStatus,
-    ].some(isPendingEffect),
+    sections,
+    loading: [childrenStatus, directionStatus, citiesStatus].some(
+      isPendingEffect
+    ),
   })
 );
 
@@ -124,7 +121,12 @@ forward({
 sample({
   clock: $activeCity,
   fn: (cityId) => cityId,
-  target: [getDirectionsFx, resetDisciplines],
+  target: [
+    getDirectionsFx,
+    resetDisciplines,
+    resetSections,
+    resetOrganizations,
+  ],
 });
 
 $activeCity.on(setCity, (state, cityId) => {
@@ -132,6 +134,7 @@ $activeCity.on(setCity, (state, cityId) => {
 
   return cityId;
 });
+
 $children.on(getChildrenFx.doneData, (state, data) => data);
 $directions.on(getDirectionsFx.doneData, (state, { data }) => data);
 $cities.on(getCitiesFx.doneData, (state, { data }) => data);
@@ -141,3 +144,15 @@ $disciplines
     [direction]: disciplines,
   }))
   .reset(resetDisciplines);
+$sections
+  .on(setSections, (state, { direction, sections }) => ({
+    ...state,
+    [direction]: sections,
+  }))
+  .reset(resetDisciplines);
+$organizations
+  .on(setOrganization, (state, { direction, organizations }) => ({
+    ...state,
+    [direction]: organizations,
+  }))
+  .reset(resetOrganizations);

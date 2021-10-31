@@ -1,35 +1,50 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useStore } from 'effector-react';
+import { useDebounce } from 'use-debounce';
 import { AsyncWrap, MainTemplate, SearchBar, Select } from '../../../ui';
-import { $global, setCity } from '../../model';
-import {
-  HobbySlider,
-  OrganizationSlider,
-  SliderList,
-  WrapList,
-} from '../../molecules';
+import { $global, HOST_URL, setCity, SUGGESTIONS_URL } from '../../model';
+import { HobbySlider, OrganizationSlider, WrapList } from '../../molecules';
 import { HeaderTabs, NoData } from '../../atoms';
 import s from './all-directions-page.module.scss';
+import { request } from '../../../libs';
 
 export const AllDirectionsPage: FC = () => {
-  const [query, setQuery] = useState('');
+  const [text, setText] = useState('');
+  const [query] = useDebounce(text, 500);
   const { directions, cities, activeCity, loading } = useStore($global);
+  const [suggestions, setSuggestions] = useState<any>({});
+  const [sugLoading, setSugLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onSearchBarChange = ({ target: { value } }): void => {
-    setQuery(value);
+    setText(value);
   };
 
   const clearSearchBarQuery = (): void => {
-    setQuery('');
+    setText('');
   };
 
-  // const filteredOrganizations = query.length
-  //   ? organizations?.filter(({ name }) =>
-  //       name.toLowerCase().includes(query.toLocaleLowerCase())
-  //     )
-  //   : [];
+  const getSuggestions = async (): Promise<void> => {
+    try {
+      setSugLoading(true);
+      const newSuggestions = await request<any>({
+        url: `${HOST_URL}${SUGGESTIONS_URL}?query=${query}`,
+      })();
 
-  // const anyResultExist = filteredOrganizations?.length > 0;
+      setSuggestions(newSuggestions);
+    } catch ({ message }) {
+      console.error(message);
+      setError(message);
+    } finally {
+      setSugLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (query?.length >= 3) {
+      getSuggestions();
+    }
+  }, [query]);
 
   const pushState = {
     title: 'Дополнительное образование',
@@ -48,7 +63,7 @@ export const AllDirectionsPage: FC = () => {
       <div className={s.wrap}>
         <div className={s.search}>
           <SearchBar
-            value={query}
+            value={text}
             onChange={onSearchBarChange}
             placeholder="Поиск"
           />
@@ -63,7 +78,7 @@ export const AllDirectionsPage: FC = () => {
             onChange={({ target: { value } }) => setCity(Number(value))}
           />
         </div>
-        {!query?.length && (
+        {query?.length < 3 && (
           <AsyncWrap
             state={{
               loading,
@@ -78,53 +93,36 @@ export const AllDirectionsPage: FC = () => {
             </div>
           </AsyncWrap>
         )}
-        {/* {anyResultExist && ( */}
-        {/*  <div className={s.results}> */}
-        {/*    <AsyncWrap */}
-        {/*      state={{ */}
-        {/*        loading, */}
-        {/*        error: schedules.error, */}
-        {/*      }} */}
-        {/*    > */}
-        {/*      {filteredHobbies?.length > 0 && ( */}
-        {/*        <div className={s.hobbies}> */}
-        {/*          <HobbySlider array={filteredHobbies} pushState={pushState} /> */}
-        {/*        </div> */}
-        {/*      )} */}
-        {/*    </AsyncWrap> */}
-        {/*    <AsyncWrap */}
-        {/*      state={{ */}
-        {/*        loading, */}
-        {/*        error: disciplines.error, */}
-        {/*      }} */}
-        {/*    > */}
-        {/*      {filteredDisciplines?.length > 0 && ( */}
-        {/*        <div className={s.disciplines}> */}
-        {/*          <SliderList */}
-        {/*            array={filteredDisciplines} */}
-        {/*            title="Дисциплины" */}
-        {/*            pushState={pushState} */}
-        {/*          /> */}
-        {/*        </div> */}
-        {/*      )} */}
-        {/*    </AsyncWrap> */}
-        {/*    <AsyncWrap */}
-        {/*      state={{ */}
-        {/*        loading, */}
-        {/*        error: organizations.error, */}
-        {/*      }} */}
-        {/*    > */}
-        {/*      {filteredOrganizations?.length > 0 && ( */}
-        {/*        <div className={s.organizations}> */}
-        {/*          <OrganizationSlider */}
-        {/*            array={filteredOrganizations} */}
-        {/*            pushState={pushState} */}
-        {/*          /> */}
-        {/*        </div> */}
-        {/*      )} */}
-        {/*    </AsyncWrap> */}
-        {/*  </div> */}
-        {/* )} */}
+        {query?.length >= 3 && suggestions?.suggestionSections && (
+          <AsyncWrap
+            state={{
+              loading: sugLoading,
+              error,
+            }}
+          >
+            <div className={s.hobbies}>
+              <HobbySlider
+                array={suggestions?.suggestionSections}
+                pushState={pushState}
+              />
+            </div>
+          </AsyncWrap>
+        )}
+        {query?.length >= 3 && suggestions?.sggestionOrganizations && (
+          <AsyncWrap
+            state={{
+              loading: sugLoading,
+              error,
+            }}
+          >
+            <div className={s.organizations}>
+              <OrganizationSlider
+                array={suggestions?.suggestionSections}
+                pushState={pushState}
+              />
+            </div>
+          </AsyncWrap>
+        )}
       </div>
       {![] && query.length > 0 && (
         <div className={s.nothing}>

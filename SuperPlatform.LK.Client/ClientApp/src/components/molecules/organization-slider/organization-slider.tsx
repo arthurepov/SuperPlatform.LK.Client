@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button, ScrollableList } from '../../../ui';
 import { MetroStation } from '../../atoms';
 import s from './organization-slider.module.scss';
+import { IOrganization } from '../../model';
 
 interface IOrganizationSlider {
-  array: any[];
+  array: IOrganization[];
   pushState: {
     title: string;
     path: string;

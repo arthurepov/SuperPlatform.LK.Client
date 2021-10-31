@@ -11,37 +11,107 @@ import {
 import { NoData, RouterSlilderTabs } from '../../atoms';
 import {
   $global,
+  arrayFilteringFunc,
+  DIRECTIONS_URL,
   DISCIPLINES_URL,
   HOST_URL,
   IDiscipline,
+  IOrganization,
+  ISection,
+  ORGANIZATIONS_URL,
   setDisciplines,
+  setOrganization,
+  setSections,
 } from '../../model';
 import { HobbySlider, OrganizationSlider, SliderList } from '../../molecules';
 import s from './direction-page.module.scss';
-import { DISCIPLINES_MOCK } from '../../model/mock';
 
 export const DirectionPage: FC = () => {
   const { id: directionId } = useParams<{ id: string }>();
   const [query, setQuery] = useState('');
+  const [disciplineError, setDisciplineError] = useState('');
+  const [disciplineLoading, setDisciplineLoading] = useState(false);
+  const [sectionError, setSectionError] = useState('');
+  const [sectionLoading, setSectionLoading] = useState(false);
+  const [organizationError, setOrganizationError] = useState('');
+  const [organizationLoading, setOrganizationLoading] = useState(false);
   const { history } = useRouter();
-  const { directions, activeCity, disciplines, loading } = useStore($global);
+  const {
+    directions,
+    activeCity,
+    sections,
+    organizations,
+    disciplines,
+    loading,
+  } = useStore($global);
 
   useEffect(() => {
     const getDisciplines = async (): Promise<void> => {
       try {
-        // const data = await request<IDiscipline[]>({
-        //   url: `${HOST_URL}${DISCIPLINES_URL}?cityId=${activeCity}&directionId=${directionId}`,
-        // })();
+        setDisciplineLoading(true);
+        const data = await request<IDiscipline[]>({
+          url: `${HOST_URL}${DISCIPLINES_URL}?cityId=${activeCity}&directionId=${directionId}`,
+        })();
 
-        // @ts-ignore
         setDisciplines({
-          direction: directionId,
-          disciplines: DISCIPLINES_MOCK.data,
+          direction: Number(directionId),
+          disciplines: data,
         });
       } catch ({ message }) {
         console.error(message);
+        setDisciplineError(message);
+      } finally {
+        setDisciplineLoading(false);
       }
     };
+
+    const getSection = async (): Promise<void> => {
+      try {
+        setSectionLoading(true);
+
+        const res = await request<ISection[]>({
+          url: `${HOST_URL}${DIRECTIONS_URL}/${directionId}/sections`,
+        })();
+
+        setSections({
+          direction: Number(directionId),
+          sections: res,
+        });
+      } catch ({ message }) {
+        console.error(message);
+        setSectionError(message);
+      } finally {
+        setSectionLoading(false);
+      }
+    };
+
+    const getOrganization = async (): Promise<void> => {
+      try {
+        setOrganizationLoading(true);
+
+        const res = await request<IOrganization[]>({
+          url: `${HOST_URL}${ORGANIZATIONS_URL}?cityId=${activeCity}`,
+        })();
+
+        setOrganization({
+          direction: Number(directionId),
+          organizations: res,
+        });
+      } catch ({ message }) {
+        console.error(message);
+        setOrganizationError(message);
+      } finally {
+        setOrganizationLoading(false);
+      }
+    };
+
+    if (!organizations[directionId]) {
+      getOrganization();
+    }
+
+    if (!sections[directionId]) {
+      getSection();
+    }
 
     if (!disciplines[directionId]) {
       getDisciplines();
@@ -70,6 +140,12 @@ export const DirectionPage: FC = () => {
     setQuery('');
   };
 
+  const filteredSections = arrayFilteringFunc(sections[directionId], query);
+  const filteredOrganizations = arrayFilteringFunc(
+    organizations[directionId],
+    query
+  );
+
   return (
     <MainTemplate header={<BackwardButton onClick={goBackFunc} text={title} />}>
       <div className={s.wrap}>
@@ -83,15 +159,16 @@ export const DirectionPage: FC = () => {
         </div>
         <AsyncWrap
           state={{
-            loading,
+            loading: sectionLoading,
+            error: sectionError,
           }}
         >
-          {[].length > 0 && (
+          {filteredSections?.length > 0 && (
             <div className={s.hobbies}>
               <HobbySlider
-                array={[]}
+                array={filteredSections}
                 onClick={() =>
-                  history.push(`/directions/${directionId}/hobbies`, pushState)
+                  history.push(`/directions/${directionId}/sections`, pushState)
                 }
                 pushState={pushState}
               />
@@ -100,7 +177,8 @@ export const DirectionPage: FC = () => {
         </AsyncWrap>
         <AsyncWrap
           state={{
-            loading,
+            loading: disciplineLoading,
+            error: disciplineError,
           }}
         >
           {disciplines[directionId]?.length > 0 && (
@@ -122,13 +200,14 @@ export const DirectionPage: FC = () => {
         </AsyncWrap>
         <AsyncWrap
           state={{
-            loading,
+            loading: organizationLoading,
+            error: organizationError,
           }}
         >
-          {[].length > 0 && (
+          {filteredOrganizations?.length > 0 && (
             <div className={s.organizations}>
               <OrganizationSlider
-                array={[]}
+                array={filteredOrganizations}
                 onClick={() =>
                   history.push(
                     `/directions/${directionId}/organizations`,

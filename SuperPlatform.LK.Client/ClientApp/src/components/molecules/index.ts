@@ -6,3 +6,4 @@ export * from './schedule-slider';
 export * from './organization-or-discipline';
 export * from './hobby-list';
 export * from './hobby-slider';
+export * from './section-groups';

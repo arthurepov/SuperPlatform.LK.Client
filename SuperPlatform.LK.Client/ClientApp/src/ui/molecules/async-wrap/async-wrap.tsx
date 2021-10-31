@@ -20,9 +20,9 @@ interface IAsyncWrap {
 }
 
 const DefaultErrorComponent: React.FC<IErrorProps> = ({ error }) => (
-  <div>
-    <div>ERROR!</div>
-    <div>{error}</div>
+  <div className={s.error}>
+    <div className={s.error_title}>Ошибка!</div>
+    <div className={s.error_text}>{error}</div>
   </div>
 );
 

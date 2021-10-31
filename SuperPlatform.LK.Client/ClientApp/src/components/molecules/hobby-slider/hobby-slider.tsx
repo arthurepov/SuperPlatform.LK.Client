@@ -2,14 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ScrollableList } from '../../../ui';
 import s from './hobby-slider.module.scss';
+import { ISection } from '../../model';
 
-interface IHobbySlider {
-  array: {
-    name: string;
-    address: string;
-    organizationName: string;
-    disciplineId: number;
-  }[];
+interface Props {
+  array: ISection[];
   pushState: {
     title: string;
     path: string;
@@ -17,11 +13,7 @@ interface IHobbySlider {
   onClick?: () => void;
 }
 
-export const HobbySlider: React.FC<IHobbySlider> = ({
-  onClick,
-  array,
-  pushState,
-}) => {
+export const HobbySlider: React.FC<Props> = ({ onClick, array, pushState }) => {
   return (
     <>
       <div className={s.header}>
@@ -33,22 +25,37 @@ export const HobbySlider: React.FC<IHobbySlider> = ({
         )}
       </div>
       <ScrollableList>
-        {array.map(({ name, address, organizationName, disciplineId }) => (
-          <Link
-            to={{
-              pathname: `/disciplines/${disciplineId}`,
-              state: pushState,
-            }}
-            className={s.item}
-            key={name + address}
-          >
-            <div>
-              <div className={s.title}>{name}</div>
-              <div className={s.address}>{address}</div>
-              <div className={s.organizationName}>{organizationName}</div>
-            </div>
-          </Link>
-        ))}
+        {array.map(
+          ({
+            name,
+            sectionName,
+            id,
+            organizationName,
+            address,
+            organizationAdress,
+          }) => (
+            <Link
+              to={{
+                pathname: `/disciplines/${id}`,
+                state: pushState,
+              }}
+              className={s.item}
+              key={id}
+            >
+              <div>
+                <div className={s.title}>{sectionName ?? name}</div>
+                {(address || organizationAdress) && (
+                  <div className={s.address}>
+                    {address ?? organizationAdress}
+                  </div>
+                )}
+                {organizationName && (
+                  <div className={s.organizationName}>{organizationName}</div>
+                )}
+              </div>
+            </Link>
+          )
+        )}
       </ScrollableList>
     </>
   );

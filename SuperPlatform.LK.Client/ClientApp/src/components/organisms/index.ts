@@ -11,3 +11,4 @@ export * from './signed-page';
 export * from './sign-page';
 export * from './child-page';
 export * from './signed-section-page';
+export * from './hobby-page';

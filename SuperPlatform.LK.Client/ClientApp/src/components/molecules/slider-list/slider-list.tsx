@@ -58,7 +58,9 @@ export const SliderList: React.FC<ISliderList> = ({
                 )}
               </div>
               <h2>{name}</h2>
-              {(ageMin || ageMax) && <span>{renderAge(ageMin, ageMax)}</span>}
+              {(ageMin !== undefined || ageMax !== undefined) && (
+                <span>{renderAge(ageMin, ageMax)}</span>
+              )}
             </Link>
           )
         )}

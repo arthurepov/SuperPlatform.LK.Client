@@ -1,41 +1,51 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useStore } from 'effector-react';
 import { useParams } from 'react-router';
-import { usePastLocationState } from '../../../libs';
+import { request, usePastLocationState } from '../../../libs';
 import { AsyncWrap, BackwardButton, MainTemplate } from '../../../ui';
-import { $global } from '../../model';
+import {
+  $global,
+  HOST_URL,
+  IOrganization,
+  ORGANIZATIONS_URL,
+  setOrganization,
+} from '../../model';
 import { OrganizationsList } from '../../molecules';
 
 export const AllOrganizationsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { directions, loading } = useStore($global);
+  const [organizationError, setOrganizationError] = useState('');
+  const [organizationLoading, setOrganizationLoading] = useState(false);
+  const { organizations, directions, activeCity, loading } = useStore($global);
   const currentDirection = directions?.find(
     ({ id: directionId }) => Number(id) === directionId
   );
 
-  // const filteredDisciplineIds =
-  //   [
-  //     ...new Set(
-  //       disciplines?.data
-  //         ?.filter(({ direction }) => direction?.id === Number(id))
-  //         .map(({ id: disciplineId }) => disciplineId)
-  //     ),
-  //   ] ?? [];
+  useEffect(() => {
+    const getOrganization = async (): Promise<void> => {
+      try {
+        setOrganizationLoading(true);
 
-  // const filteredOrganizationIds =
-  //   [
-  //     ...new Set(
-  //       schedules?.data
-  //         ?.filter(({ disciplineId }) =>
-  //           filteredDisciplineIds.includes(disciplineId)
-  //         )
-  //         .map(({ organizationId }) => organizationId)
-  //     ),
-  //   ] ?? [];
+        const res = await request<IOrganization[]>({
+          url: `${HOST_URL}${ORGANIZATIONS_URL}?cityId=${activeCity}`,
+        })();
 
-  // const filteredOrganizations = organizations?.data?.filter(
-  //   ({ id: organizationId }) => filteredOrganizationIds.includes(organizationId)
-  // );
+        setOrganization({
+          direction: Number(id),
+          organizations: res,
+        });
+      } catch ({ message }) {
+        console.error(message);
+        setOrganizationError(message);
+      } finally {
+        setOrganizationLoading(false);
+      }
+    };
+
+    if (!organizations[id]) {
+      getOrganization();
+    }
+  }, []);
 
   const { title, goBackFunc } = usePastLocationState({
     title: currentDirection?.name,
@@ -46,10 +56,14 @@ export const AllOrganizationsPage: FC = () => {
     <MainTemplate header={<BackwardButton onClick={goBackFunc} text={title} />}>
       <AsyncWrap
         state={{
-          loading,
+          loading: organizationLoading || loading,
+          error: organizationError,
         }}
       >
-        <OrganizationsList array={[]} href="/organizations" />
+        <OrganizationsList
+          array={organizations[id] ?? []}
+          href="/organizations"
+        />
       </AsyncWrap>
     </MainTemplate>
   );

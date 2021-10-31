@@ -38,7 +38,7 @@ export const ROUTES = [
     component: AllOrganizationsPage,
   },
   {
-    path: '/directions/:id/hobbies',
+    path: '/directions/:id/sections',
     component: AllHobbiesPage,
   },
   {

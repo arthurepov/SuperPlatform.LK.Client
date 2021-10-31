@@ -1,0 +1,67 @@
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & + .root {
+    margin-top: 2.5rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem -0.25rem -0.5rem;
+
+  & > div {
+    margin-bottom: 0.5rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+}
+
+.button {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 74px;
+
+  &_active {
+    background-color: var(--color-yellow);
+    border-color: transparent;
+  }
+}
+
+.schedules {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem -0.5rem -1rem;
+
+  & > div {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.schedule {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--color-yellow);
+  border-radius: 4px;
+
+  & + .schedule {
+    margin-top: 0.24rem;
+  }
+
+  &_title {
+    margin-bottom: 0.5rem;
+  }
+}
