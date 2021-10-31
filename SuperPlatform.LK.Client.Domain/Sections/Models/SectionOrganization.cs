@@ -16,9 +16,15 @@ namespace SuperPlatform.LK.Client.Domain.Sections.Models
 
         public string Station { get; set; }
 
+        public string station { get; set; }
+
         public double? Latitude { get; set; }
 
         public double? Longitude { get; set; }
+
+        public double? latitude { get; set; }
+
+        public double? longitude { get; set; }
 
         public string Phone { get; set; }
     }

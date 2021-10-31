@@ -81,13 +81,13 @@ namespace SuperPlatform.LK.Client.Controllers
                 list.Add(new ChildSectionDto
                 {
                     Id = section.Id,
-                    OrganizationName = section.Organization?.Name,
+                    OrganizationName = section.Organization?.name,
                     DirectionName = section.Direction?.Name,
                     SectionName = section.Name,
-                    Station = section.Organization?.Station,
-                    Address = section.Organization?.Address,
-                    Longitude = section.Organization?.Longitude,
-                    Latitude = section.Organization?.Latitude,
+                    Station = section.Organization?.station,
+                    Address = section.Organization?.address,
+                    Longitude = section.Organization?.longitude,
+                    Latitude = section.Organization?.latitude,
                     RecordType = (int?)section.RecordType,
                     Cost = section.Cost,
                     CostDuration = (int?)section.CostDuration,
