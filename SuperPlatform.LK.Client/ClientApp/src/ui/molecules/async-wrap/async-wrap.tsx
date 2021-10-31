@@ -5,7 +5,7 @@ import s from './async-wrap.module.scss';
 
 interface IState {
   loading: boolean;
-  error: string;
+  error?: string;
 }
 
 interface IErrorProps {
@@ -42,7 +42,7 @@ export const AsyncWrap: React.FC<IAsyncWrap> = ({
     return <LoadingComponent />;
   }
 
-  if (state.error) {
+  if (state.error?.length > 0) {
     return <ErrorComponent error={state.error} />;
   }
 

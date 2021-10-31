@@ -30,7 +30,7 @@ export function request<T>({ url, options, delay }: IRequest) {
         throw new Error(data?.message ?? data);
       }
 
-      return data;
+      return data?.data ?? data;
     } catch ({ message }) {
       return Promise.reject(new Error(message));
     }

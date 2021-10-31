@@ -13,7 +13,7 @@ import {
   SignPage,
   ChildPage,
   SignedSectionPage,
-} from '../features';
+} from '../components';
 
 export const ROUTES = [
   {
@@ -54,7 +54,7 @@ export const ROUTES = [
     component: MapPage,
   },
   {
-    path: '/signed/:sectionId',
+    path: '/signed/:childId/:sectionGroupId',
     component: SignedSectionPage,
   },
   {

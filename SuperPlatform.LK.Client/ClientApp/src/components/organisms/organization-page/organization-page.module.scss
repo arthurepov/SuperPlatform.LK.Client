@@ -1,0 +1,93 @@
+@import '../../../assets/styles/variables';
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.organization {
+    display: flex;
+    flex-direction: column;
+
+    & > a {
+        text-decoration: none;
+        width: auto;
+        display: block;
+
+        & > button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+}
+
+.title {
+    font-family: $rubrik;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 2rem;
+    color: #212121;
+    margin-bottom: 1rem;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    & > div {
+        & > span, & > a {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 0.8rem;
+            line-height: 0.9rem;
+            color: #9E9E9E;
+            text-decoration: none;
+        }
+
+        & > span {
+            margin-right: 0.2rem;
+        }
+    }
+}
+
+.address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+
+    & > span {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 0.8rem;
+        line-height: 0.9rem;
+        color: #9E9E9E;
+    }
+
+    & > a {
+        text-decoration: none;
+        
+        & > button {
+            padding-right: 0.4rem;
+    
+            & > span {
+                height: 1.5rem;
+                padding-left: 1rem;
+                padding-right: 0.4rem;
+            }
+    
+            & > svg {
+                & > path {
+                    fill: #FFCF4E;
+                }
+            }
+        }
+    }
+}
+
+.age_select {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
