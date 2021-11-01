@@ -139,7 +139,7 @@ namespace SuperPlatform.LK.Client.Controllers
         {
             var strapiChild = await GetStrapiChildByChildId(childId);
             var childSectionGroups = await _sectionGroupChildrenService.GetByChild(strapiChild.Id);
-            var childSectionGroup = childSectionGroups.FirstOrDefault(x => x.SectionGroup.Id == strapiChild.Id);
+            var childSectionGroup = childSectionGroups.FirstOrDefault(x => x.SectionGroup.Id == sectionGroupId);
             if(childSectionGroup == null)
             {
                 return NotFound("Запись в группе не найдена!");
