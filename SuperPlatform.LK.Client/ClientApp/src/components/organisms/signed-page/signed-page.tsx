@@ -9,6 +9,11 @@ import s from './signed-page.module.scss';
 export const SignedPage: FC = () => {
   const { children, loading } = useStore($global);
 
+  const pushState = {
+    title: 'Уже ходим',
+    path: `/signed`,
+  };
+
   return (
     <MainTemplate
       header={
@@ -23,7 +28,10 @@ export const SignedPage: FC = () => {
           {children?.map(({ sections, id, ...rest }) => {
             if (sections?.length > 0) {
               return (
-                <Link to={`/child/${id}`} key={id}>
+                <Link
+                  to={{ pathname: `/child/${id}`, state: pushState }}
+                  key={id}
+                >
                   <Child
                     withArrow={sections?.length > 0}
                     sections={sections}

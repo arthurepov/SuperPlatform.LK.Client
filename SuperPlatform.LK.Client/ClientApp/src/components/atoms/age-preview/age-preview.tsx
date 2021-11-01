@@ -1,6 +1,6 @@
 import React from 'react';
-import { declensionOfNumber } from '../../../libs';
-
+import cn from 'classnames';
+import { renderAge } from '../../model';
 import s from './age-preview.module.scss';
 
 interface IAgePreview {
@@ -9,40 +9,21 @@ interface IAgePreview {
   [x: string]: any;
 }
 
-const titles = ['года', 'лет', 'лет'];
-
 export const AgePreview: React.FC<IAgePreview> = ({
   ageMin,
   ageMax,
+  className,
   ...rest
 }) => {
-  const renderAge = (): string => {
-    let from = 'От';
-    let to = 'до';
+  const text = renderAge(ageMin, ageMax);
 
-    if (ageMin !== null) {
-      from += ` ${ageMin} `;
-
-      if (ageMax === null) {
-        from += ` ${declensionOfNumber(ageMin, titles)} `;
-        to = '';
-      }
-    }
-
-    if (ageMax !== null) {
-      if (ageMin === null) {
-        from = '';
-        to = 'До';
-      }
-      to += ` ${ageMax} ${declensionOfNumber(ageMax, titles)}`;
-    }
-
-    return from + to;
-  };
+  if (!text) {
+    return null;
+  }
 
   return (
-    <div className={s.wrap} {...rest}>
-      {renderAge()}
+    <div className={cn(s.wrap, className)} {...rest}>
+      {text}
     </div>
   );
 };

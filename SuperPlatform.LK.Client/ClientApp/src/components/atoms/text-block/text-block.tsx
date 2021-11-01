@@ -5,7 +5,7 @@ import { ReactComponent as Arrow } from './arrow.svg';
 import s from './text-block.module.scss';
 
 interface Props {
-  topText: string;
+  topText: string | string[];
   bottomText: string;
   withDivider?: boolean;
   withArrow?: boolean;
@@ -28,7 +28,15 @@ export const TextBlock: FC<Props> = ({
       })}
       onClick={onClick}
     >
-      <Typography variant="body2">{topText}</Typography>
+      {typeof topText === 'string' ? (
+        <Typography variant="body2">{topText}</Typography>
+      ) : (
+        topText.map((text) => (
+          <Typography key={text} variant="body2">
+            {text}
+          </Typography>
+        ))
+      )}
       <Typography color="secondary" variant="h5">
         {bottomText}
       </Typography>

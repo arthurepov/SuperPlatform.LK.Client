@@ -3,7 +3,7 @@ import { useStore } from 'effector-react';
 import { useDebounce } from 'use-debounce';
 import { AsyncWrap, MainTemplate, SearchBar, Select } from '../../../ui';
 import { $global, HOST_URL, setCity, SUGGESTIONS_URL } from '../../model';
-import { HobbySlider, OrganizationSlider, WrapList } from '../../molecules';
+import { HobbySlider, WrapList } from '../../molecules';
 import { HeaderTabs, NoData } from '../../atoms';
 import s from './all-directions-page.module.scss';
 import { request } from '../../../libs';
@@ -12,7 +12,7 @@ export const AllDirectionsPage: FC = () => {
   const [text, setText] = useState('');
   const [query] = useDebounce(text, 500);
   const { directions, cities, activeCity, loading } = useStore($global);
-  const [suggestions, setSuggestions] = useState<any>({});
+  const [suggestions, setSuggestions] = useState<any>([]);
   const [sugLoading, setSugLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -93,7 +93,7 @@ export const AllDirectionsPage: FC = () => {
             </div>
           </AsyncWrap>
         )}
-        {query?.length >= 3 && suggestions?.suggestionSections && (
+        {query?.length >= 3 && suggestions && (
           <AsyncWrap
             state={{
               loading: sugLoading,
@@ -101,37 +101,19 @@ export const AllDirectionsPage: FC = () => {
             }}
           >
             <div className={s.hobbies}>
-              <HobbySlider
-                array={suggestions?.suggestionSections}
-                pushState={pushState}
-              />
+              <HobbySlider array={suggestions} pushState={pushState} />
             </div>
           </AsyncWrap>
         )}
-        {query?.length >= 3 && suggestions?.sggestionOrganizations && (
-          <AsyncWrap
-            state={{
-              loading: sugLoading,
-              error,
-            }}
-          >
-            <div className={s.organizations}>
-              <OrganizationSlider
-                array={suggestions?.suggestionSections}
-                pushState={pushState}
-              />
-            </div>
-          </AsyncWrap>
+        {!suggestions.length && query.length >= 3 && !sugLoading && (
+          <div className={s.nothing}>
+            <NoData
+              buttonText="Вернуться в каталог"
+              onClick={clearSearchBarQuery}
+            />
+          </div>
         )}
       </div>
-      {![] && query.length > 0 && (
-        <div className={s.nothing}>
-          <NoData
-            buttonText="Вернуться в каталог"
-            onClick={clearSearchBarQuery}
-          />
-        </div>
-      )}
     </MainTemplate>
   );
 };

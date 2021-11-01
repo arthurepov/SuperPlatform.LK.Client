@@ -7,12 +7,13 @@ import {
   OrganizationPage,
   MapPage,
   AllOrganizationsMapPage,
-  DirectionPage,
   AllHobbiesPage,
   SignedPage,
   SignPage,
   ChildPage,
   SignedSectionPage,
+  NewDirectionPage,
+  HobbyPage,
 } from '../components';
 
 export const ROUTES = [
@@ -43,7 +44,7 @@ export const ROUTES = [
   },
   {
     path: '/directions/:id',
-    component: DirectionPage,
+    component: NewDirectionPage,
   },
   {
     path: '/organizations/:id',
@@ -52,6 +53,10 @@ export const ROUTES = [
   {
     path: '/ocmap',
     component: MapPage,
+  },
+  {
+    path: '/section/:id',
+    component: HobbyPage,
   },
   {
     path: '/signed/:childId/:sectionGroupId',

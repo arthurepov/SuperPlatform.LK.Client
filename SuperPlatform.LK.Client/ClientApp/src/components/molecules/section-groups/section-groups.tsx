@@ -1,18 +1,30 @@
 import React, { FC, useState } from 'react';
 import cn from 'classnames';
+import sortBy from 'lodash/sortBy';
 import s from './section-groups.module.scss';
 import { IOrganizationSection, WEEK_DAYS_SHORT } from '../../model';
 import { Typography } from '../../../ui';
 
-export const SectionGroups: FC<IOrganizationSection> = ({
-  id,
-  name,
-  sectionGroups,
-}) => {
+interface Props extends IOrganizationSection {
+  onChange?: (sectionGroupId: number) => void;
+}
+
+export const SectionGroups: FC<Props> = ({ name, sectionGroups, onChange }) => {
   const [activeGroup, setActiveGroup] = useState(sectionGroups?.[0]?.id);
   const activeGroupObj = sectionGroups?.find(
     ({ id: groupId }) => activeGroup === groupId
   );
+
+  const onGroupChange = (id: number): void => {
+    setActiveGroup(id);
+
+    if (onChange) {
+      onChange(id);
+    }
+  };
+
+  const sortedSchedules =
+    sortBy(activeGroupObj?.sectionGroupSchedules ?? [], 'dayOfWeek') ?? [];
 
   return (
     <div className={s.root}>
@@ -25,7 +37,7 @@ export const SectionGroups: FC<IOrganizationSection> = ({
             <div
               role="button"
               tabIndex={0}
-              onClick={() => setActiveGroup(groupId)}
+              onClick={() => onGroupChange(groupId)}
               key={groupId}
               className={cn(s.button, {
                 [s.button_active]: groupId === activeGroup,
@@ -36,7 +48,7 @@ export const SectionGroups: FC<IOrganizationSection> = ({
           ))}
         </div>
         <div className={s.schedules}>
-          {activeGroupObj?.sectionGroupSchedules?.map(
+          {sortedSchedules?.map(
             ({ id: scheduleId, dayOfWeek, sectionGroupScheduleTimes }) => (
               <div key={scheduleId}>
                 <Typography className={s.schedule_title}>

@@ -1,7 +1,7 @@
 import { EffectState } from 'patronum/status';
 import ym from 'react-yandex-metrika';
 
-import { IYMPhoneClick } from '../../libs';
+import { declensionOfNumber, IYMPhoneClick } from '../../libs';
 
 export const isValidAge = (age = 0, min: number, max: number): boolean => {
   if (age !== 0) {
@@ -21,17 +21,21 @@ export const isValidAge = (age = 0, min: number, max: number): boolean => {
   return true;
 };
 
+const AGE_TITLES = ['года', 'лет', 'лет'];
+
 export const renderAge = (ageMin?: number, ageMax?: number): string | null => {
   if (ageMax && ageMin && ageMin !== 0 && ageMax !== 0) {
-    return `${ageMin && `От ${ageMin}`} ${ageMax && `до ${ageMax}`}`;
+    return `${ageMin && `От ${ageMin}`} ${
+      ageMax && `до ${ageMax} ${declensionOfNumber(ageMax, AGE_TITLES)}`
+    }`;
   }
 
   if (ageMax && ageMax !== 0) {
-    return `До ${ageMax}`;
+    return `До ${ageMax} ${declensionOfNumber(ageMax, AGE_TITLES)}`;
   }
 
   if (ageMin && ageMin !== 0) {
-    return `До ${ageMin}`;
+    return `До ${ageMin} ${declensionOfNumber(ageMin, AGE_TITLES)}`;
   }
 
   return null;
@@ -72,9 +76,9 @@ export const WEEK_DAYS_LONG = [
   'Воскресенье',
 ];
 
-export const arrayFilteringFunc = (array = [], query: string): any[] => {
-  if (query.length >= 1) {
-    return array.filter((obj) => {
+export const arrayFilteringFunc = (array = [], query = ''): any[] => {
+  if (query?.length >= 1) {
+    return array?.filter((obj) => {
       return Object.values(obj).some((val) => {
         return val?.toString()?.toLowerCase()?.includes(query?.toLowerCase());
       });
