@@ -22,6 +22,14 @@ namespace SuperPlatform.LK.Client.Models.Sections
 
         public int? RecordType { get; set; }
 
+        public decimal? Cost { get; set; }
+
+        public int MinPlacesCount { get; set; }
+
+        public int MaxPlacesCount { get; set; }
+
+        public int Duration { get; set; }
+
         public IReadOnlyList<SectionGroupDto> SectionGroups { get; set; } = new List<SectionGroupDto>();
     }
 }

@@ -63,6 +63,10 @@ namespace SuperPlatform.LK.Client.Controllers
                 OrganizationName = section.Organization.name,
                 Longitude = section.Organization.longitude,
                 Latitude = section.Organization.latitude,
+                Cost = section.Cost,
+                Duration = section.Duration,
+                MaxPlacesCount = section.MaxPlacesCount,
+                MinPlacesCount = section.MinPlacesCount,
                 SectionGroups = sectionGroups
                     .Select(x => new SectionGroupDto
                     {
