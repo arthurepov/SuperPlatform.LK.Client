@@ -44,25 +44,18 @@ namespace SuperPlatform.LK.Client.Controllers
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<SuggestionResponse>> Suggestion(string query)
+        public async Task<ActionResult<IReadOnlyList<SuggestionSectionDto>>> Suggestion(string query)
         {
             if (query.Length < 3)
             {
                 return BadRequest("Длина строки должна быть не меньше 3 символов.");
             }
 
-            var disciplines = await _disciplineService.Suggestion(query);
-            var organizations = await _organizationService.Suggestion(query);
             var sections = await _sectionService.Suggestion(query);
 
-            var responsew = new SuggestionResponse
-            {
-                SuggestionDisciplenes = _mapper.Map<IReadOnlyList<SuggestionDisciplineDto>>(disciplines),
-                SggestionOrganizations = _mapper.Map<IReadOnlyList<SuggestionOrganizationDto>>(organizations),
-                SuggestionSections = _mapper.Map<IReadOnlyList<SuggestionSectionDto>>(sections)
-            };
+            var SuggestionSections = _mapper.Map<IReadOnlyList<SuggestionSectionDto>>(sections);
 
-            return Ok(responsew);
+            return Ok(SuggestionSections);
         }
     }
 }
