@@ -22,15 +22,15 @@ export const isValidAge = (age = 0, min: number, max: number): boolean => {
 };
 
 export const renderAge = (ageMin?: number, ageMax?: number): string | null => {
-  if (ageMax && ageMin) {
+  if (ageMax && ageMin && ageMin !== 0 && ageMax !== 0) {
     return `${ageMin && `От ${ageMin}`} ${ageMax && `до ${ageMax}`}`;
   }
 
-  if (ageMax) {
+  if (ageMax && ageMax !== 0) {
     return `До ${ageMax}`;
   }
 
-  if (ageMin) {
+  if (ageMin && ageMin !== 0) {
     return `До ${ageMin}`;
   }
 
@@ -71,3 +71,15 @@ export const WEEK_DAYS_LONG = [
   'Суббота',
   'Воскресенье',
 ];
+
+export const arrayFilteringFunc = (array = [], query: string): any[] => {
+  if (query.length >= 1) {
+    return array.filter((obj) => {
+      return Object.values(obj).some((val) => {
+        return val?.toString()?.toLowerCase()?.includes(query?.toLowerCase());
+      });
+    });
+  }
+
+  return array;
+};

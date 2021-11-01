@@ -6,9 +6,10 @@ import { MetroStation, NoData, Title } from '../../atoms';
 import { ReactComponent as LocationIcon } from '../../../assets/images/location-icon.svg';
 
 import s from './organizations-list.module.scss';
+import { IOrganization } from '../../model';
 
 interface IOrganizationsList {
-  array: any[];
+  array: IOrganization[];
   href: string;
 }
 
@@ -54,7 +55,7 @@ export const OrganizationsList: React.FC<IOrganizationsList> = ({
         <SearchBar onChange={onSearchBarChange} placeholder="Поиск" />
       </div>
       {list?.length > 0 ? (
-        list.map(({ name, id, address, station }) => (
+        list.map(({ name, id, address, station, email }) => (
           <Link
             key={id}
             to={{
@@ -66,6 +67,7 @@ export const OrganizationsList: React.FC<IOrganizationsList> = ({
             <div>
               <div className={s.item_title}>{name}</div>
               <div className={s.item_address}>{address}</div>
+              <div className={s.item_address}>{email}</div>
               {station && <MetroStation>{station}</MetroStation>}
             </div>
           </Link>

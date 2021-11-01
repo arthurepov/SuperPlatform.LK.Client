@@ -24,6 +24,12 @@ export interface IDiscipline {
   photo: IPhoto[];
 }
 
+export interface IOrganizationSection {
+  id: number;
+  name: string;
+  sectionGroups: ISectionGroup[];
+}
+
 export interface IOrganization {
   id: number;
   name: string;
@@ -34,6 +40,7 @@ export interface IOrganization {
   longitude: number;
   phone: string;
   photo: IPhoto;
+  sections?: IOrganizationSection[];
 }
 
 export interface ISchedule {
@@ -68,6 +75,21 @@ export interface IChild {
     disciplineName: string;
     directionName: string;
   }[];
+}
+
+export interface ISection {
+  id: number;
+  name?: string;
+  directionName: string;
+  sectionName: string;
+  recordType: number;
+  cost: number;
+  placesCount: number;
+  freePlacesCount: number;
+  organizationName?: string;
+  organizationAdress?: string;
+  address?: string;
+  sectionGroups: ISectionGroup[];
 }
 
 export interface ISectionGroup {

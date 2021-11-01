@@ -20,11 +20,22 @@ export const SignedPage: FC = () => {
     >
       <AsyncWrap state={{ loading }}>
         <div>
-          {children?.map((child) => (
-            <Link to={`/child/${child.id}`} key={child.id}>
-              <Child withArrow {...child} />
-            </Link>
-          ))}
+          {children?.map(({ sections, id, ...rest }) => {
+            if (sections?.length > 0) {
+              return (
+                <Link to={`/child/${id}`} key={id}>
+                  <Child
+                    withArrow={sections?.length > 0}
+                    sections={sections}
+                    id={id}
+                    {...rest}
+                  />
+                </Link>
+              );
+            }
+
+            return <Child key={id} sections={sections} id={id} {...rest} />;
+          })}
         </div>
       </AsyncWrap>
     </MainTemplate>

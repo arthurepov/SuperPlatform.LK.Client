@@ -6,9 +6,10 @@ import { NoData, Title } from '../../atoms';
 import { ReactComponent as LocationIcon } from '../../../assets/images/location-icon.svg';
 
 import s from './hobby-list.module.scss';
+import { ISection } from '../../model';
 
 interface IHobbyList {
-  array: any[];
+  array: ISection[];
   href: string;
 }
 
@@ -16,8 +17,8 @@ export const HobbyList: React.FC<IHobbyList> = ({ array, href }) => {
   const [query, setQuery] = useState('');
   const location = useLocation();
   const list = query.length
-    ? array?.filter(({ name, address }) =>
-        [name, address].some((value) =>
+    ? array?.filter(({ sectionName }) =>
+        [sectionName].some((value) =>
           value.toLowerCase().includes(query.toLowerCase())
         )
       )
@@ -51,19 +52,19 @@ export const HobbyList: React.FC<IHobbyList> = ({ array, href }) => {
         <SearchBar onChange={onSearchBarChange} placeholder="Поиск" />
       </div>
       {list?.length > 0 ? (
-        list.map(({ name, disciplineId, address, organizationName }) => (
+        list.map(({ sectionName, id }) => (
           <Link
-            key={disciplineId + name + address}
+            key={id}
             to={{
-              pathname: `${href}/${disciplineId}`,
+              pathname: `${href}/${id}`,
               state: pushState,
             }}
             className={s.item}
           >
             <div>
-              <div className={s.item_title}>{name}</div>
-              <div className={s.item_address}>{address}</div>
-              <div className={s.item_organizationName}>{organizationName}</div>
+              <div className={s.item_title}>{sectionName}</div>
+              <div className={s.item_address}>{id}</div>
+              <div className={s.item_organizationName}>{id}</div>
             </div>
           </Link>
         ))
