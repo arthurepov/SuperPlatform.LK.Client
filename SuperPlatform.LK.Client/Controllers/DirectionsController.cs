@@ -81,6 +81,8 @@ namespace SuperPlatform.LK.Client.Controllers
                 list.Add(new ChildSectionDto
                 {
                     Id = section.Id,
+                    MinAge = section.MinAge,
+                    MaxAge = section.MaxAge,
                     OrganizationName = section.Organization?.name,
                     DirectionName = section.Direction?.Name,
                     SectionName = section.Name,

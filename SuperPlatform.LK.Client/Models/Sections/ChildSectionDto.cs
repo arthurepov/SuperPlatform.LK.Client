@@ -6,6 +6,10 @@ namespace SuperPlatform.LK.Client.Models.Sections
     {
         public long Id { get; set; }
 
+        public int MinAge { get; set; }
+
+        public int MaxAge { get; set; }
+
         public string DirectionName { get; set; }
 
         public string OrganizationName { get; set; }
