@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
 using SuperPlatform.LK.Client.Domain.Children.Models;
 using SuperPlatform.LK.Client.Domain.Children.Repositories;
@@ -25,7 +26,8 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
 
         public async Task<StrapiChild> GetByEducationCardId(string educationCardId)
         {
-            var list = await SendGetRequest<List<StrapiChild>>($"{GetContentUrl()}?EducationCardChildId={educationCardId}");
+            var url = $"{GetContentUrl()}?EducationCardChildId={HttpUtility.UrlEncode(educationCardId)}";
+            var list = await SendGetRequest<List<StrapiChild>>(url);
 
             return list.FirstOrDefault();
         }

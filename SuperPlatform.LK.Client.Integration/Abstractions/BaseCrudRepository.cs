@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SuperPlatform.LK.Client.Domain.Abstractions;
+using SuperPlatform.LK.Client.Domain.Sections.Models;
 using SuperPlatform.LK.Client.Integration.Json;
 using SuperPlatform.LK.Client.Integration.Mapping;
 using SuperPlatform.LK.Client.Integration.Models;
@@ -48,7 +49,9 @@ namespace SuperPlatform.LK.Client.Integration.Abstractions
                 return new List<T>();
             }
 
-            var queryString = string.Join("&", ids.Select(x => $"Id_in={x}"));
+            var idName = typeof(T) == typeof(SectionGroup) || typeof(T) == typeof(Section) ? "id" : "Id";
+
+            var queryString = string.Join("&", ids.Select(x => $"{idName}_in={x}"));
 
             var url = $"{GetContentUrl()}?{queryString}";
 

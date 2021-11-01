@@ -66,7 +66,7 @@ namespace SuperPlatform.LK.Client.Controllers
            
             foreach(var child in childrenDto)
             {
-                child.Sections = (await GetChildSections(child.Id)).Value;
+                child.Sections = await GetChildSectionsImpl(child.Id);
             }
 
             return Ok(childrenDto);
@@ -127,38 +127,11 @@ namespace SuperPlatform.LK.Client.Controllers
         }
 
         [HttpGet("{id}/sections")]
-        public async Task<ActionResult<IReadOnlyList<SectionShortDto>>> GetChildSections([FromRoute] string id)
+        public async Task<ActionResult<IReadOnlyList<SectionShortDto>>> GetChildSections([FromRoute] string childId)
         {
-            var strapiChild = await GetStrapiChildByChildId(id);
-            if (strapiChild == null)
-            {
-                return Ok(new List<SectionShortDto>());
-            }
+            var childrenSections = await GetChildSectionsImpl(childId);
 
-            var childSectionGroups = await _sectionGroupChildrenService.GetByChild(strapiChild.Id);
-            var sectionGroups = await _sectionGroupService.GetByIds(childSectionGroups.Select(x => x.SectionGroup.Id).ToArray());
-            var sections = await _sectionService.GetByIds(sectionGroups.Select(x => x.Section.Id).ToArray());
-
-            var model = sectionGroups
-                .Select(x => new
-                {
-                    Section = sections.First(y => y.Id == x.Section.Id),
-                    SectionGroup = x
-                })
-                .Select(
-                x => new SectionShortDto
-                {
-                    SectionGroupId = x.SectionGroup.Id,
-                    SectionId = x.Section.Id,
-                    SectionName = x.Section.Name,
-                    SectionGroupName = x.SectionGroup.Name,
-                    DirectionName = x.Section.Direction.Name,
-                    DIsciplineName = x.Section.Discipline.Name,
-                    OrganizationName = x.Section.Organization.Name
-                })
-                .ToList();
-
-            return Ok(model);
+            return Ok(childrenSections);
         }
 
         [HttpDelete("{childId}/sectionGroups/{sectionGroupId}")]
@@ -192,6 +165,40 @@ namespace SuperPlatform.LK.Client.Controllers
             var strapiChilds = await _strapiChildService.GetByPhone(phone);
 
             return strapiChilds.FirstOrDefault(x => $"{x.LastName} {x.FirstName} {x.MiddleName}" == child.FullName);
+        }
+
+        private async Task<IReadOnlyList<SectionShortDto>> GetChildSectionsImpl(string childId)
+        {
+            var strapiChild = await GetStrapiChildByChildId(childId);
+            if (strapiChild == null)
+            {
+                return new List<SectionShortDto>(0);
+            }
+
+            var childSectionGroups = await _sectionGroupChildrenService.GetByChild(strapiChild.Id);
+            var sectionGroups = await _sectionGroupService.GetByIds(childSectionGroups.Select(x => x.SectionGroup.Id).ToArray());
+            var sections = await _sectionService.GetByIds(sectionGroups.Select(x => x.Section.Id).ToArray());
+
+            var model = sectionGroups
+                .Select(x => new
+                {
+                    Section = sections.First(y => y.Id == x.Section.Id),
+                    SectionGroup = x
+                })
+                .Select(
+                x => new SectionShortDto
+                {
+                    SectionGroupId = x.SectionGroup.Id,
+                    SectionId = x.Section.Id,
+                    SectionName = x.Section.Name,
+                    SectionGroupName = x.SectionGroup.Name,
+                    DirectionName = x.Section.Direction.Name,
+                    DIsciplineName = x.Section.Discipline.Name,
+                    OrganizationName = x.Section.Organization.Name
+                })
+                .ToList();
+
+            return model;
         }
     }
 }

@@ -32,7 +32,6 @@ namespace SuperPlatform.LK.Client.Infrastructure.Authantication
 
         protected override async Task<HandleRequestResult> HandleRemoteAuthenticateAsync()
         {
-
             var responseType = "code";
             var clientId = Options.ClientId;
             var clientSecret = Options.Secret;
@@ -53,7 +52,7 @@ namespace SuperPlatform.LK.Client.Infrastructure.Authantication
                 {
                     return HandleRequestResult.Fail(new Exception(message: $"Ошибка аутентификации: {json}"));
                 }
-               
+
                 var responseDesirialized = JsonConvert.DeserializeObject<ObrCardAuthenticateResponse>(json);
                 if (!responseDesirialized.IsSuccess)
                 {
