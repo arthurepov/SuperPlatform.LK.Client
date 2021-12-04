@@ -13,10 +13,12 @@ import { Button, Typography } from '../../../ui';
 import { ReactComponent as LocationIcon } from '../../../assets/images/location-icon.svg';
 import { AgePreview } from '../../atoms';
 import { SectionGroups } from '../section-groups';
+import { useViewport } from '../../../libs';
 
 interface Props extends ISection {
   pushState?: any;
   className?: string;
+  onClick?: (...args: any[]) => void;
 }
 
 export const SectionInfo: FC<Props> = ({
@@ -35,8 +37,12 @@ export const SectionInfo: FC<Props> = ({
   costDuration,
   sectionGroups,
   className,
+  onClick,
 }) => {
   const children = useStore($children);
+  const {
+    viewport: { isWide },
+  } = useViewport();
   const [activeGroup, setActiveGroup] = useState(sectionGroups?.[0]?.id);
 
   return (
@@ -104,10 +110,14 @@ export const SectionInfo: FC<Props> = ({
           />
         </div>
       )}
-      {children?.length > 0 && (
-        <Link className={s.sign} to={`/sign/${activeGroup}`}>
-          <Button isWide>Записаться</Button>
-        </Link>
+      {isWide ? (
+        <Button onClick={onClick}>Записаться</Button>
+      ) : (
+        children?.length > 0 && (
+          <Link className={s.sign} to={`/sign/${activeGroup}`}>
+            <Button isWide>Записаться</Button>
+          </Link>
+        )
       )}
     </div>
   );

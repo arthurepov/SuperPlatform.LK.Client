@@ -10,6 +10,7 @@
         "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix"
     },
     "dependencies": {
+        "@material-ui/core": "^4.12.3",
         "@testing-library/jest-dom": "^5.11.2",
         "@testing-library/react": "^10.4.7",
         "@testing-library/user-event": "^12.0.17",

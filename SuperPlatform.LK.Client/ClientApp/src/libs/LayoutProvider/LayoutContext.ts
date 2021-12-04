@@ -10,6 +10,7 @@ const initialContextState = {
     height: 0,
     margin: 0,
     marginHorizontal: 0,
+    isWide: false,
   },
   layoutDataMap: {},
   lockTouch: (isLocked: boolean) => {},

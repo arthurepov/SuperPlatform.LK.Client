@@ -7,7 +7,13 @@ import {
   MainTemplate,
   SearchBar,
 } from '../../../ui';
-import { request, usePastLocationState } from '../../../libs';
+import {
+  Modal,
+  request,
+  useModal,
+  usePastLocationState,
+  useViewport,
+} from '../../../libs';
 import {
   $global,
   arrayFilteringFunc,
@@ -27,6 +33,10 @@ export const NewDirectionPage: FC = () => {
   const [query, setQuery] = useState('');
   const { directions, activeCity, sections, disciplines, loading } =
     useStore($global);
+  const {
+    viewport: { isWide },
+  } = useViewport();
+  const { isActive, toggleModal } = useModal();
 
   const onSearchBarChange = ({ target: { value } }): void => {
     setQuery(value);
@@ -96,7 +106,12 @@ export const NewDirectionPage: FC = () => {
       >
         <div className={s.wrap}>
           {fileredSections?.map((section) => (
-            <SectionInfo pushState={pushState} key={section.id} {...section} />
+            <SectionInfo
+              pushState={pushState}
+              key={section.id}
+              {...section}
+              onClick={toggleModal}
+            />
           ))}
         </div>
       </AsyncWrap>
@@ -107,6 +122,11 @@ export const NewDirectionPage: FC = () => {
             onClick={clearSearchBarQuery}
           />
         </div>
+      )}
+      {isWide && (
+        <Modal isActive={isActive} toggleModal={toggleModal}>
+          <div>huj</div>
+        </Modal>
       )}
     </MainTemplate>
   );
