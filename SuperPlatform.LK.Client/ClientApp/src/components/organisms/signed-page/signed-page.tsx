@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import { Child, HeaderTabs } from '../../atoms';
 import { AsyncWrap, MainTemplate } from '../../../ui';
 import { $global } from '../../model';
+import { useViewport } from '../../../libs';
 import s from './signed-page.module.scss';
 
 export const SignedPage: FC = () => {
   const { children, loading } = useStore($global);
+  const {
+    viewport: { isWide },
+  } = useViewport();
 
   const pushState = {
     title: 'Уже ходим',
@@ -37,6 +41,7 @@ export const SignedPage: FC = () => {
                     sections={sections}
                     id={id}
                     {...rest}
+                    size={isWide ? 'L' : 'S'}
                   />
                 </Link>
               );

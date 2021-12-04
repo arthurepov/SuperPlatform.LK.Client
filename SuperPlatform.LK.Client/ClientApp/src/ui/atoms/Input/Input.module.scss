@@ -1,0 +1,38 @@
+.root {
+  max-width: 34rem;
+  width: 100%;
+  padding: 0.438rem 1rem;
+  border-radius: 4px;
+  border: 2px solid #E9E9E9;
+  background: #FBFBFB;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 2rem;
+  letter-spacing: 0.02rem;
+  color: var(--color-primary);
+  
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  &_standart {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    outline: none;
+    background-color: transparent;
+    padding: 0 0 0.438rem 0;
+  }
+
+  &_fullWidth {
+    max-width: none;
+  }
+
+  &_error {
+    border-color: var(--color-error);
+    outline-color: var(--color-error);
+  }
+}

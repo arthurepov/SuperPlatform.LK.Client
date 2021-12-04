@@ -9,46 +9,33 @@ import {
   Typography,
 } from '../../../ui';
 import { Child, TextBlock } from '../../atoms';
-import { request, useFetch } from '../../../libs';
+import { useFetch } from '../../../libs';
 import s from './signed-section-page.module.scss';
 import {
-  getChildrenFx,
   ISectionGroup,
   PEREODICITY_TYPES,
   RECORD_TYPES,
   WEEK_DAYS_LONG,
 } from '../../model';
+import { signOutSectionAsync } from '../../../utils';
 
 export const SignedSectionPage: FC = () => {
   const history = useHistory();
   const { childId, sectionGroupId } = useParams();
   const [unsubscribing, setUnsubscribing] = useState(false);
   const goBackFunc = (): void =>
-    history.action === 'POP' ? history.push('/') : history.goBack();
+    history.action === 'POP' ? history.push('/') : history.push('/signed');
 
   const { data, loading, error } = useFetch<ISectionGroup>({
     url: `/api/v1/SectionGroup/${sectionGroupId}`,
   });
 
-  const unsubscribe = async (): Promise<void> => {
-    try {
-      setUnsubscribing(true);
-      await request({
-        url: `/api/v1/Children/${childId}/sectionGroups/${sectionGroupId}`,
-        options: {
-          method: 'DELETE',
-        },
-      })();
-
-      getChildrenFx();
-
-      history.push('/signed');
-    } catch ({ message }) {
-      console.error(message);
-    } finally {
-      setUnsubscribing(false);
-    }
+  const onSuccess = (): void => {
+    history.push('/signed');
   };
+
+  const unsubscribe = async (): Promise<void> =>
+    signOutSectionAsync(setUnsubscribing, childId, sectionGroupId, onSuccess);
 
   return (
     <MainTemplate

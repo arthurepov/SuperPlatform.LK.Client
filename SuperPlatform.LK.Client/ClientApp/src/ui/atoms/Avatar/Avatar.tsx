@@ -8,9 +8,10 @@ enum Variant {
   S = 'S',
   M = 'M',
   L = 'L',
+  XL = 'XL',
 }
 
-type VariantType = 'XS' | 'S' | 'M' | 'L';
+type VariantType = 'XS' | 'S' | 'M' | 'L' | 'XL';
 
 interface AvatarProps {
   className?: string;
@@ -26,6 +27,7 @@ export const Avatar = memo<AvatarProps>(
       [s.small]: variant === Variant.S,
       [s.medium]: variant === Variant.M,
       [s.large]: variant === Variant.L,
+      [s.extraLarge]: variant === Variant.XL,
       [className as string]: className as string,
     });
 

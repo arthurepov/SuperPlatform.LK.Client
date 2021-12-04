@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 34rem;
+
+  &_fullWidth {
+    max-width: none;
+  }
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.helperText {
+  margin-top: 0.5rem;
+  padding-left: 0.438rem;
+}

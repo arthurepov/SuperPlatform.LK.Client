@@ -111,7 +111,7 @@ export const SectionInfo: FC<Props> = ({
         </div>
       )}
       {isWide ? (
-        <Button onClick={onClick}>Записаться</Button>
+        <Button onClick={() => onClick(activeGroup)}>Записаться</Button>
       ) : (
         children?.length > 0 && (
           <Link className={s.sign} to={`/sign/${activeGroup}`}>

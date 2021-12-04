@@ -13,9 +13,9 @@ const variantsMapping = {
   subheading2: 'h6',
   body1: 'p',
   body2: 'p',
-};
+} as const;
 
-type Variant = keyof typeof variantsMapping;
+type VariantKeys = keyof typeof variantsMapping;
 
 export type Color =
   | 'primary'
@@ -26,8 +26,9 @@ export type Color =
   | 'white';
 
 interface TypographyProps {
+  component?: typeof variantsMapping[VariantKeys] | 'div';
   className?: string;
-  variant?: Variant;
+  variant?: VariantKeys;
   color?: Color;
   bold?: boolean;
   uppercase?: boolean;
@@ -35,6 +36,7 @@ interface TypographyProps {
 }
 
 export const Typography: FC<TypographyProps> = ({
+  component,
   variant = 'body1',
   color = 'primary',
   children,
@@ -44,7 +46,8 @@ export const Typography: FC<TypographyProps> = ({
   capitalize = false,
   ...props
 }) => {
-  const Component: any = variantsMapping[variant] ?? variantsMapping.body1;
+  const Component: any =
+    component ?? variantsMapping[variant] ?? variantsMapping.body1;
 
   return (
     <Component

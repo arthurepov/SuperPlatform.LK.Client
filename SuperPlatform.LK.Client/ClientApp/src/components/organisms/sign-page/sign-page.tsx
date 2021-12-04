@@ -2,12 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { useStore } from 'effector-react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { ActionSheet } from '../../../ui/molecules/ActionSheet';
 import { Child, TextBlock } from '../../atoms';
 import {
   $global,
-  CHILDREN_URL,
-  getChildrenFx,
   HOST_URL,
   PEREODICITY_TYPES,
   RECORD_TYPES,
@@ -20,9 +17,11 @@ import {
   Button,
   MainTemplate,
   Typography,
+  ActionSheet,
 } from '../../../ui';
 import { request } from '../../../libs';
 import s from './sign-page.module.scss';
+import { signOnSectionAsync } from '../../../utils';
 
 export const SignPage: FC = () => {
   const { sectionGroupId } = useParams<{ sectionGroupId: string }>();
@@ -90,29 +89,18 @@ export const SignPage: FC = () => {
   const goBackFunc = (): void =>
     history.action === 'POP' ? history.push('/') : history.goBack();
 
+  const onSuccess = (): void => {
+    history.push(`/signed/${selectedChild}/${sectionGroupId}`);
+  };
+
   const onSubmit = async (): Promise<void> => {
-    try {
-      setSigning(true);
-      await request({
-        url: `${HOST_URL}${CHILDREN_URL}/${selectedChild}/sections`,
-        options: {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ sectionGroupId: Number(sectionGroupId) }),
-        },
-      })();
-
-      getChildrenFx();
-
-      history.push(`/signed/${selectedChild}/${sectionGroupId}`);
-    } catch ({ message }) {
-      console.error(message);
-      setError(message);
-    } finally {
-      setSigning(false);
-    }
+    signOnSectionAsync(
+      selectedChild,
+      Number(sectionGroupId),
+      setSigning,
+      setError,
+      onSuccess
+    );
   };
 
   return (

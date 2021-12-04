@@ -62,7 +62,7 @@ export const Modal: FC<IModal> = ({
                   tabIndex={0}
                   onClick={toggleModal}
                 >
-                  <CloseCross />
+                  <CloseCross style={{ color: '#9E9E9E' }} />
                 </div>
               </Tooltip>
             )}
