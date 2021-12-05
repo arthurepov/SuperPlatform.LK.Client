@@ -84,8 +84,10 @@ namespace SuperPlatform.LK.Client.Controllers
                         StartTime = y.StartTime,
                         EndTime = y.EndTime
                     })
+                    .OrderBy(x=>x.StartTime)
                     .ToList()
                 })
+                .OrderBy(x=>x.DayOfWeek)
                 .ToList()
             });
         }

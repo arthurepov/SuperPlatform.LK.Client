@@ -101,6 +101,12 @@ namespace SuperPlatform.LK.Client.Controllers
                 await _strapiChildService.Update(strapiChild);
             }
 
+            var exisstGroupChild = await _sectionGroupChildrenService.GetByChild(strapiChild.Id);
+            if(exisstGroupChild.Any(x=>x.SectionGroup.Id == request.SectionGroupId))
+            {
+                return BadRequest($"Ребенок уже записан в группу");
+            }
+
             await _sectionGroupChildrenService.Create(new Domain.Sections.Models.SectionGroupChildren
             {
                 Child = new StrapiChild { Id = strapiChild.Id },

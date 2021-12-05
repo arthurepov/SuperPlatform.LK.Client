@@ -8,7 +8,6 @@ namespace SuperPlatform.LK.Client.Domain.Medias.Models
 
         public string Caption { get; set; }
 
-
         public ImageMediaFormat Formats { get; set; }
     }
 }
