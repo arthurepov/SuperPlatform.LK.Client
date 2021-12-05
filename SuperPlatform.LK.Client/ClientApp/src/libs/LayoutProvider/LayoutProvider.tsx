@@ -94,6 +94,7 @@ export class LayoutProvider extends PureComponent<
         height: 0,
         margin: 0,
         marginHorizontal: 0,
+        isWide: innerWidth > 1024,
       },
       layoutDataMap: {},
       lockTouch: this.props.lockTouch || noop,
@@ -209,6 +210,7 @@ export class LayoutProvider extends PureComponent<
         marginHorizontal,
         width: innerWidth,
         height: innerHeight,
+        isWide: innerWidth > 1024,
       },
     });
   };

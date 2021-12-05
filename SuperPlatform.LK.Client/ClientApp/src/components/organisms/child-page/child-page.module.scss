@@ -10,4 +10,47 @@
   & > a {
     width: 100%;
   }
+
+  & > div {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+
+    & > div {
+      margin-left: 2rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > * {
+        & + * {
+          margin-top: 0.5rem;
+        }
+      }
+    }
+
+    & + div {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.group {
+  background: #E9E9E9;
+  border-radius: 2px;
+  padding: 2px 6px;
+}
+
+.modal_wrap {
+  & > div {
+    & + div {
+      margin-top: 1rem;
+    }
+  }
+
+  & > button {
+    margin-top: 2rem;
+  }
 }

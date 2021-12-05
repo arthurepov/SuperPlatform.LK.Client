@@ -25,7 +25,7 @@ export const HobbySlider: React.FC<Props> = ({ onClick, array, pushState }) => {
         )}
       </div>
       <ScrollableList>
-        {array.map(
+        {array?.map(
           ({
             name,
             sectionName,
@@ -36,7 +36,7 @@ export const HobbySlider: React.FC<Props> = ({ onClick, array, pushState }) => {
           }) => (
             <Link
               to={{
-                pathname: `/disciplines/${id}`,
+                pathname: `/section/${id}`,
                 state: pushState,
               }}
               className={s.item}

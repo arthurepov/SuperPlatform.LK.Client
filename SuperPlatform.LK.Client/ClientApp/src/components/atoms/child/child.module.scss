@@ -23,6 +23,14 @@
   flex-direction: column;
   justify-content: space-between;
   margin-left: 1rem;
+
+  &_big {
+    justify-content: flex-start;
+
+    & > h2 {
+      margin-bottom: 0.5rem;
+    }
+  }
 }
 
 .arrow {

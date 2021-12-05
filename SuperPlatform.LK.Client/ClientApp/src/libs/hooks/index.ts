@@ -7,3 +7,7 @@ export * from './useDelayedRender';
 export * from './useTransition';
 export * from './useOrientationChange';
 export * from './useResize';
+export * from './useMedia';
+export * from './useKeyPress';
+export * from './useLockBodyScroll';
+export * from './useOnClickOutside';

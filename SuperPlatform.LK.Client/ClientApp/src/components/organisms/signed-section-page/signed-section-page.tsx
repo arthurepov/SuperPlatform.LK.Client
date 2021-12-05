@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import {
@@ -9,75 +9,40 @@ import {
   Typography,
 } from '../../../ui';
 import { Child, TextBlock } from '../../atoms';
-import { request, useFetch } from '../../../libs';
+import { useFetch } from '../../../libs';
 import s from './signed-section-page.module.scss';
 import {
-  getChildrenFx,
   ISectionGroup,
   PEREODICITY_TYPES,
   RECORD_TYPES,
   WEEK_DAYS_LONG,
 } from '../../model';
-
-const MOCK = [
-  {
-    id: 1,
-    dayOfWeek: 1,
-    sectionGroupScheduleTimes: [
-      {
-        id: 0,
-        startTime: '10:00',
-        endTime: '12:00',
-      },
-      {
-        id: 1,
-        startTime: '15:00',
-        endTime: '17:00',
-      },
-    ],
-  },
-  {
-    id: 2,
-    dayOfWeek: 3,
-    sectionGroupScheduleTimes: [
-      {
-        id: 0,
-        startTime: '10:00',
-        endTime: '12:00',
-      },
-    ],
-  },
-];
+import { signOutSectionAsync } from '../../../utils';
 
 export const SignedSectionPage: FC = () => {
   const history = useHistory();
   const { childId, sectionGroupId } = useParams();
+  const [unsubscribing, setUnsubscribing] = useState(false);
   const goBackFunc = (): void =>
-    history.action === 'POP' ? history.push('/') : history.goBack();
+    history.action === 'POP' ? history.push('/') : history.push('/signed');
 
   const { data, loading, error } = useFetch<ISectionGroup>({
     url: `/api/v1/SectionGroup/${sectionGroupId}`,
   });
 
-  const unsubscribe = async (): Promise<void> => {
-    try {
-      return;
-      await request({
-        url: `/api/v1/Children/${childId}/sectionGroups/${sectionGroupId}`,
-      });
-      getChildrenFx();
-      history.push('/signed');
-    } catch ({ message }) {
-      console.error(message);
-    }
+  const onSuccess = (): void => {
+    history.push('/signed');
   };
+
+  const unsubscribe = async (): Promise<void> =>
+    signOutSectionAsync(setUnsubscribing, childId, sectionGroupId, onSuccess);
 
   return (
     <MainTemplate
       header={
         <BackwardButton
           onClick={goBackFunc}
-          text="МБУК г. Казани Дом культуры в жилом массиве Вознесенское"
+          text={history.action === 'POP' ? 'На главную' : 'Назад'}
         />
       }
     >
@@ -90,7 +55,7 @@ export const SignedSectionPage: FC = () => {
         <div className={s.wrap}>
           <TextBlock
             withDivider
-            topText="Школа авиамоделирования Авиатор"
+            topText={data?.sectionName}
             bottomText={data?.address}
           />
           <TextBlock
@@ -103,18 +68,18 @@ export const SignedSectionPage: FC = () => {
           <Typography variant="h4" className={s.subtitle} color="secondary">
             Раписание
           </Typography>
-          {MOCK.map(({ dayOfWeek, sectionGroupScheduleTimes }) => (
-            <div key={dayOfWeek}>
-              {sectionGroupScheduleTimes?.map(({ id, startTime, endTime }) => (
-                <TextBlock
-                  key={id}
-                  withDivider
-                  topText={`${startTime} – ${endTime}`}
-                  bottomText={WEEK_DAYS_LONG[dayOfWeek]}
-                />
-              ))}
-            </div>
-          ))}
+          {data?.sectionGroupSchedules?.map(
+            ({ id, dayOfWeek, sectionGroupScheduleTimes }) => (
+              <TextBlock
+                key={id}
+                withDivider
+                topText={sectionGroupScheduleTimes?.map(
+                  ({ startTime, endTime }) => `${startTime} – ${endTime}`
+                )}
+                bottomText={WEEK_DAYS_LONG[dayOfWeek]}
+              />
+            )
+          )}
           <Typography variant="h4" className={s.subtitle} color="secondary">
             Преподаватель
           </Typography>
@@ -127,7 +92,7 @@ export const SignedSectionPage: FC = () => {
         </div>
       </AsyncWrap>
       <Button
-        disabled={loading || error}
+        disabled={loading || error || unsubscribing}
         onClick={unsubscribe}
         className={s.button}
         variant="warn"

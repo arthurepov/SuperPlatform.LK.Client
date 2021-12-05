@@ -23,6 +23,14 @@
 }
 
 .large {
+  width: 7.5rem;
+  height: 7.5rem;
+  min-height: 7.5rem;
+  min-width: 7.5rem;
+  border-radius: 50%;
+}
+
+.extraLarge {
   width: 10rem;
   height: 10rem;
   min-height: 10rem;

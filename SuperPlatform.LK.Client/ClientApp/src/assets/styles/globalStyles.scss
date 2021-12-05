@@ -53,6 +53,9 @@ table {
     --color-overlay: rgba(0, 0, 0, 0.4);
     --layer-blocker: 35;
     --layer-modal: 40;
+    --toastify-toast-min-height: 0;
+    --toastify-color-success: #009D32;
+    --toastify-color-error: #D43E4F;
 }
 
 html {
@@ -73,5 +76,33 @@ html {
 
     &::selection {
         background:  var(--color-yellow);
+    }
+}
+
+
+.Toastify__toast {
+    padding: 17.5px;
+    border-radius: 8px;
+    font-size: 14px;
+    align-items: center;
+}
+
+.Toastify__toast-body {
+    padding: 0;
+}
+
+.Toastify__toast-container {
+    &--top-right {
+        top: calc(env(safe-area-inset-top) + 16px);
+
+        @media (max-width: 480px) {
+            transform: translateX(-50%);
+            top: calc(env(safe-area-inset-top) + 16px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        width: calc(100vw - 32px);
+        left: 50%;
     }
 }

@@ -6,3 +6,4 @@ export * from './SearchBar';
 export * from './Loader';
 export * from './Avatar';
 export * from './Typography';
+export * from './Input';

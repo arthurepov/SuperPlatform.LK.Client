@@ -5,11 +5,12 @@ import { ReactComponent as Arrow } from './arrow.svg';
 import s from './text-block.module.scss';
 
 interface Props {
-  topText: string;
+  topText: string | string[];
   bottomText: string;
   withDivider?: boolean;
   withArrow?: boolean;
   onClick?: () => void;
+  extraText?: string;
 }
 
 export const TextBlock: FC<Props> = ({
@@ -18,6 +19,7 @@ export const TextBlock: FC<Props> = ({
   withDivider = false,
   onClick,
   withArrow = !!onClick,
+  extraText,
 }) => {
   return (
     <div
@@ -28,10 +30,23 @@ export const TextBlock: FC<Props> = ({
       })}
       onClick={onClick}
     >
-      <Typography variant="body2">{topText}</Typography>
+      {typeof topText === 'string' ? (
+        <Typography variant="body2">{topText}</Typography>
+      ) : (
+        topText.map((text) => (
+          <Typography key={text} variant="body2">
+            {text}
+          </Typography>
+        ))
+      )}
       <Typography color="secondary" variant="h5">
         {bottomText}
       </Typography>
+      {extraText && (
+        <Typography className={s.extraText} variant="h5">
+          {extraText}
+        </Typography>
+      )}
       {withArrow && <Arrow className={s.arrow} />}
     </div>
   );

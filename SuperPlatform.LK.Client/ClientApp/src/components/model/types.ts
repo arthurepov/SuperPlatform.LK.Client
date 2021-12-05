@@ -84,6 +84,11 @@ export interface ISection {
   sectionName: string;
   recordType: number;
   cost: number;
+  costDuration?: number;
+  minAge?: number;
+  maxAge?: number;
+  latitude?: number;
+  longitude?: number;
   placesCount: number;
   freePlacesCount: number;
   organizationName?: string;

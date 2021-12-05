@@ -1,0 +1,28 @@
+.root {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+  align-items: start;
+
+  & + .root {
+    margin-top: 1rem;
+  }
+}
+
+.schedules {
+  & > div {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    grid-gap: 0.9rem;
+
+    & > input {
+      text-align: center;
+    }
+
+    & + div {
+      margin-top: 0.5rem;
+    }
+  }
+}
