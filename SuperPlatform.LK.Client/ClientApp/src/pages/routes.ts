@@ -1,19 +1,12 @@
 import { Home } from './home';
 import { Error404Page } from './error404';
 import {
-  OneDicsiplinePage,
-  AllDisciplinesPage,
-  AllOrganizationsPage,
-  OrganizationPage,
   MapPage,
-  AllOrganizationsMapPage,
-  AllHobbiesPage,
   SignedPage,
   SignPage,
   ChildPage,
   SignedSectionPage,
-  NewDirectionPage,
-  HobbyPage,
+  DirectionPage,
 } from '../components';
 
 export const ROUTES = [
@@ -23,40 +16,12 @@ export const ROUTES = [
     component: Home,
   },
   {
-    path: '/disciplines/:id',
-    component: OneDicsiplinePage,
-  },
-  {
-    path: '/directions/:id/disciplines',
-    component: AllDisciplinesPage,
-  },
-  {
-    path: '/directions/:id/organizations/map',
-    component: AllOrganizationsMapPage,
-  },
-  {
-    path: '/directions/:id/organizations',
-    component: AllOrganizationsPage,
-  },
-  {
-    path: '/directions/:id/sections',
-    component: AllHobbiesPage,
-  },
-  {
     path: '/directions/:id',
-    component: NewDirectionPage,
-  },
-  {
-    path: '/organizations/:id',
-    component: OrganizationPage,
+    component: DirectionPage,
   },
   {
     path: '/ocmap',
     component: MapPage,
-  },
-  {
-    path: '/section/:id',
-    component: HobbyPage,
   },
   {
     path: '/signed/:childId/:sectionGroupId',

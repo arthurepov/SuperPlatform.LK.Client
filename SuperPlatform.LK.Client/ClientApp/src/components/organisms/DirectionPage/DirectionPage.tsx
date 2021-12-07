@@ -32,10 +32,10 @@ import {
 import { NoData, RouterSlilderTabs } from '../../atoms';
 import { SectionInfo } from '../../molecules';
 import { FormItem, Input } from '../../../ui';
-import s from './NewDirectionPage.module.scss';
+import s from './DirectionPage.module.scss';
 import { signOnSectionAsync } from '../../../utils';
 
-export const NewDirectionPage: FC = () => {
+export const DirectionPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const [sectionLoading, setSectionLoading] = useState(false);
