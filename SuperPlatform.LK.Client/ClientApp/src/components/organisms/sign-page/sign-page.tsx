@@ -107,7 +107,7 @@ export const SignPage: FC = () => {
     <MainTemplate
       header={<BackwardButton onClick={goBackFunc} text="Запись на занятия" />}
     >
-      <AsyncWrap state={{ loading: loading || groupLoading, error }}>
+      <AsyncWrap state={{ loading: loading || groupLoading }}>
         <>
           <div className={s.wrap}>
             <Typography variant="h4" className={s.subtitle} color="secondary">
