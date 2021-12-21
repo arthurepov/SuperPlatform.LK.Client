@@ -108,6 +108,22 @@ namespace SuperPlatform.LK.Client
                 app.UseDeveloperExceptionPage();
             }
 
+            #region HTTPS-Schema
+
+            app.UseHsts();
+            app.UseHttpsRedirection();
+            app.UseForwardedHeaders();
+
+            #endregion
+
+            #region Static Files
+
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
+            app.UseSpaStaticFiles();
+
+            #endregion
+
             app.UseRouting();
 
             app.UseCors();
