@@ -111,7 +111,7 @@ namespace SuperPlatform.LK.Client
             #region HTTPS-Schema
 
             app.UseHsts();
-            app.UseHttpsRedirection();
+          //  app.UseHttpsRedirection();
             app.UseForwardedHeaders();
 
             #endregion
