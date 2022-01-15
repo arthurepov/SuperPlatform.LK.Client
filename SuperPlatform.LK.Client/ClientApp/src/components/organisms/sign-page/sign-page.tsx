@@ -126,13 +126,15 @@ export const SignPage: FC = () => {
               topText={group?.sectionName}
               bottomText={group?.organizationName}
             />
-            <TextBlock
-              withDivider
-              topText={RECORD_TYPES[group?.recordType ?? 0]}
-              bottomText={`${group?.cost} ₽/${
-                PEREODICITY_TYPES[group?.costDuration ?? 0]
-              }`}
-            />
+            {group?.cost && (
+              <TextBlock
+                withDivider
+                topText={RECORD_TYPES[group?.recordType ?? 0]}
+                bottomText={`${group?.cost} ₽/${
+                  PEREODICITY_TYPES[group?.costDuration ?? 0]
+                }`}
+              />
+            )}
             <Typography variant="h4" className={s.subtitle} color="secondary">
               Расписание
             </Typography>
