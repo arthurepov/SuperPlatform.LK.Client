@@ -31,7 +31,7 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
         {
             var queryString = GetPagingQueryParams(skip, take);
 
-            queryString.Add(nameof(Section.Direction), directionId.ToString());
+            queryString.Add($"{nameof(Section.Discipline)}.{nameof(Section.Direction).ToLower()}", directionId.ToString());
 
             var entities = await SendGetRequest<List<Section>>($"{GetContentUrl()}?{queryString}");
             var totalCount = await GetTotalCount(queryString);

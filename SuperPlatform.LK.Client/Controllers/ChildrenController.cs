@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SuperPlatform.LK.Client.Controllers
 {
@@ -63,10 +64,10 @@ namespace SuperPlatform.LK.Client.Controllers
             var token = await HttpContext.GetTokenAsync("access_token");
             var children = await _childService.GetByToken(token);
             var childrenDto = _mapper.Map<IReadOnlyList<ChildDto>>(children);
-           
-            foreach(var child in childrenDto)
+
+            foreach (var child in childrenDto)
             {
-                child.Sections = await GetChildSectionsImpl(child.Id);
+                child.Sections = await GetChildSectionsImpl(HttpUtility.UrlDecode(child.Id));
             }
 
             return Ok(childrenDto);
@@ -75,17 +76,18 @@ namespace SuperPlatform.LK.Client.Controllers
         [HttpPost("{id}/sections")]
         public async Task<ActionResult> AddChildToSectionGroup([FromRoute] string id, [FromBody] RecordChildToSectionRequest request)
         {
-            var strapiChild = await GetStrapiChildByChildId(id);
+            var decodeId = HttpUtility.UrlDecode(id);
+            var strapiChild = await GetStrapiChildByChildId(decodeId);
             if (strapiChild == null)
             {
                 var token = await HttpContext.GetTokenAsync("access_token");
                 var children = await _childService.GetByToken(token);
-                var child = children.First(x => x.Id == id);
+                var child = children.First(x => x.Id == decodeId);
                 var nameSplit = child.FullName.Split(" ");
 
                 strapiChild = new StrapiChild
                 {
-                    EducationCardChildId = id,
+                    EducationCardChildId = decodeId,
                     LastName = nameSplit[0],
                     FirstName = nameSplit[1],
                     MiddleName = nameSplit.Count() == 3 ? nameSplit[2] : null
@@ -96,7 +98,7 @@ namespace SuperPlatform.LK.Client.Controllers
 
             if (strapiChild.EducationCardChildId == null)
             {
-                strapiChild.EducationCardChildId = id;
+                strapiChild.EducationCardChildId = decodeId;
 
                 await _strapiChildService.Update(strapiChild);
             }
@@ -119,7 +121,8 @@ namespace SuperPlatform.LK.Client.Controllers
         [HttpGet("{id}/sectionGroups/count")]
         public async Task<ActionResult<int>> GetChildSectionCount([FromRoute] string id)
         {
-            var strapiChild = await GetStrapiChildByChildId(id);
+            var decodeId = HttpUtility.UrlDecode(id);
+            var strapiChild = await GetStrapiChildByChildId(decodeId);
             if (strapiChild == null)
             {
                 return Ok(0);
@@ -135,7 +138,8 @@ namespace SuperPlatform.LK.Client.Controllers
         [HttpGet("{id}/sections")]
         public async Task<ActionResult<IReadOnlyList<SectionShortDto>>> GetChildSections([FromRoute] string childId)
         {
-            var childrenSections = await GetChildSectionsImpl(childId);
+            var decodeId = HttpUtility.UrlDecode(childId);
+            var childrenSections = await GetChildSectionsImpl(decodeId);
 
             return Ok(childrenSections);
         }
@@ -143,7 +147,8 @@ namespace SuperPlatform.LK.Client.Controllers
         [HttpDelete("{childId}/sectionGroups/{sectionGroupId}")]
         public async Task<ActionResult> DeleteChildFromSectionGroup([FromRoute] string childId, [FromRoute] long sectionGroupId)
         {
-            var strapiChild = await GetStrapiChildByChildId(childId);
+            var decodeId = HttpUtility.UrlDecode(childId);
+            var strapiChild = await GetStrapiChildByChildId(decodeId);
             var childSectionGroups = await _sectionGroupChildrenService.GetByChild(strapiChild.Id);
             var childSectionGroup = childSectionGroups.FirstOrDefault(x => x.SectionGroup.Id == sectionGroupId);
             if(childSectionGroup == null)

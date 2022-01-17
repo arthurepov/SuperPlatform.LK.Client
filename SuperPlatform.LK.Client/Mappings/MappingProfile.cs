@@ -15,6 +15,7 @@ using SuperPlatform.LK.Client.Models.Medias;
 using SuperPlatform.LK.Client.Models.Organizations;
 using SuperPlatform.LK.Client.Models.Suggestions;
 using System.Linq;
+using System.Web;
 
 namespace SuperPlatform.LK.Client.Mappings
 {
@@ -25,7 +26,8 @@ namespace SuperPlatform.LK.Client.Mappings
             CreateMap<ImageMedia, ImageMediaDto>()
                 .ForMember(x => x.url, x => x.MapFrom(y => y.GetAbsoluteUrl()));
 
-            CreateMap<Child, ChildDto>();
+            CreateMap<Child, ChildDto>()
+                .ForMember(x => x.Id, x => x.MapFrom(y => HttpUtility.UrlEncode(y.Id)));
 
             CreateMap<Direction, DirectionDto>()
                 .ForMember(x => x.Photo, x => x.MapFrom(y => y.Photo))
