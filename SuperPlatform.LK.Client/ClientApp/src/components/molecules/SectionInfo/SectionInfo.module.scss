@@ -33,6 +33,10 @@
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
+
+    & > h5 {
+      max-width: calc(100% - 6rem);
+    }
   }
 
   &_button {

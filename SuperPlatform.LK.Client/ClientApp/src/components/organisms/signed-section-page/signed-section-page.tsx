@@ -58,13 +58,15 @@ export const SignedSectionPage: FC = () => {
             topText={data?.sectionName}
             bottomText={data?.address}
           />
-          <TextBlock
-            withDivider
-            topText={RECORD_TYPES[data?.recordType ?? 0]}
-            bottomText={`${data?.cost ?? 0} ₽/${
-              PEREODICITY_TYPES[data?.costDuration ?? 0]
-            }`}
-          />
+          {data?.cost && (
+            <TextBlock
+              withDivider
+              topText={RECORD_TYPES[data?.recordType ?? 0]}
+              bottomText={`${data?.cost} ₽/${
+                PEREODICITY_TYPES[data?.costDuration ?? 0]
+              }`}
+            />
+          )}
           <Typography variant="h4" className={s.subtitle} color="secondary">
             Раписание
           </Typography>
@@ -80,15 +82,19 @@ export const SignedSectionPage: FC = () => {
               />
             )
           )}
-          <Typography variant="h4" className={s.subtitle} color="secondary">
-            Преподаватель
-          </Typography>
-          <Child
-            id="1"
-            avatar={data?.teacherPhoto}
-            fullName={data?.teacherFullName}
-            bottomText="Авиамоделирование"
-          />
+          {data?.teacherFullName && (
+            <>
+              <Typography variant="h4" className={s.subtitle} color="secondary">
+                Преподаватель
+              </Typography>
+              <Child
+                id="1"
+                avatar={data?.teacherPhoto}
+                fullName={data?.teacherFullName}
+                bottomText="Авиамоделирование"
+              />
+            </>
+          )}
         </div>
       </AsyncWrap>
       <Button
