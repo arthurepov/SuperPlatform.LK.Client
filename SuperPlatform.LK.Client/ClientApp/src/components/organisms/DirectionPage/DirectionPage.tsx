@@ -220,9 +220,12 @@ export const DirectionPage: FC = () => {
               </FormItem>
               <FormItem
                 label="Обучение"
-                helperText={`${activeGroup?.cost}₽/${
-                  PEREODICITY_TYPES[activeGroup?.costDuration]
-                }`}
+                helperText={
+                  activeGroup?.cost &&
+                  `${activeGroup?.cost}₽/${
+                    PEREODICITY_TYPES[activeGroup?.costDuration]
+                  }`
+                }
               >
                 <Input
                   disabled
