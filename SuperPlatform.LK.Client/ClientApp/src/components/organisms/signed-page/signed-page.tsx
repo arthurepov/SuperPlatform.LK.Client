@@ -47,7 +47,15 @@ export const SignedPage: FC = () => {
               );
             }
 
-            return <Child key={id} sections={sections} id={id} {...rest} />;
+            return (
+              <Child
+                key={id}
+                sections={sections}
+                id={id}
+                {...rest}
+                size={isWide ? 'L' : 'S'}
+              />
+            );
           })}
         </div>
       </AsyncWrap>
