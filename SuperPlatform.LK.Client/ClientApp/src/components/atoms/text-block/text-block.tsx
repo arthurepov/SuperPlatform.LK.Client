@@ -33,7 +33,7 @@ export const TextBlock: FC<Props> = ({
       {typeof topText === 'string' ? (
         <Typography variant="body2">{topText}</Typography>
       ) : (
-        topText.map((text) => (
+        topText?.map((text) => (
           <Typography key={text} variant="body2">
             {text}
           </Typography>
