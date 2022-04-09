@@ -195,7 +195,7 @@ namespace SuperPlatform.LK.Client.Integration.Abstractions
         {
             var settings = new JsonSerializerSettings
             {
-
+                NullValueHandling = NullValueHandling.Ignore
             };
 
             return settings;
