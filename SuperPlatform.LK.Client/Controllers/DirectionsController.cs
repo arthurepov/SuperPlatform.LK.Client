@@ -95,6 +95,7 @@ namespace SuperPlatform.LK.Client.Controllers
                     CostDuration = (int?)section.CostDuration,
                     PlacesCount = section.MaxPlacesCount,
                     FreePlacesCount = section.MaxPlacesCount - children.Count(),
+                    IsRegisterByPhoneOnly = section.Organization.IsRegisterByPhoneOnly,
                     SectionGroups = groups.Select(x => new SectionGroupDto
                     {
                         Id = x.Id,

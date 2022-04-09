@@ -35,5 +35,7 @@ namespace SuperPlatform.LK.Client.Models.Sections
         public int FreePlacesCount { get; set; }
 
         public IReadOnlyList<SectionGroupDto> SectionGroups { get; set; }
+
+        public bool IsRegisterByPhoneOnly { get; set; }
     }
 }
