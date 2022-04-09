@@ -170,7 +170,7 @@ export const SignPage: FC = () => {
             )}
           </div>
           <Button
-            disabled={isSigning}
+            disabled={isSigning || !group}
             onClick={onSubmit}
             className={s.button}
             isWide
