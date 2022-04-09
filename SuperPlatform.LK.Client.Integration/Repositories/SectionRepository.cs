@@ -41,7 +41,7 @@ namespace SuperPlatform.LK.Client.Integration.Repositories
 
         public async Task<IReadOnlyList<Section>> Suggestion(string query)
         {
-            var queryString = $"Name_contains={query}";
+            var queryString = $"_where[_or][0][Name_contains]={query}&[_or][1][Organization.name_contains]={query}";
 
             var entities = await SendGetRequest<List<Section>>($"{GetContentUrl()}?{queryString}");
 
