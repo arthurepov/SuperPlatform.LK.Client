@@ -37,5 +37,7 @@ namespace SuperPlatform.LK.Client.Models.Sections
         public IReadOnlyList<SectionGroupDto> SectionGroups { get; set; }
 
         public bool IsRegisterByPhoneOnly { get; set; }
+
+        public string OrganizationPhone { get; set; }
     }
 }

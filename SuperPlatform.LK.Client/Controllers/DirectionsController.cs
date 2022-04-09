@@ -96,6 +96,7 @@ namespace SuperPlatform.LK.Client.Controllers
                     PlacesCount = section.MaxPlacesCount,
                     FreePlacesCount = section.MaxPlacesCount - children.Count(),
                     IsRegisterByPhoneOnly = section.Organization.IsRegisterByPhoneOnly,
+                    OrganizationPhone = section.Organization.Phone,
                     SectionGroups = groups.Select(x => new SectionGroupDto
                     {
                         Id = x.Id,
