@@ -26,12 +26,14 @@ export const SectionInfo: FC<Props> = ({
   sectionName,
   organizationName,
   organizationAdress,
+  organizationPhone,
   address,
   latitude,
   longitude,
   pushState,
   minAge,
   maxAge,
+  isRegisterByPhoneOnly,
   recordType,
   cost,
   costDuration,
@@ -44,6 +46,8 @@ export const SectionInfo: FC<Props> = ({
     viewport: { isWide },
   } = useViewport();
   const [activeGroup, setActiveGroup] = useState(sectionGroups?.[0]?.id);
+  const signWithCallOnly = isRegisterByPhoneOnly && organizationPhone;
+  const hasChildren = children?.length > 0;
 
   return (
     <div className={cn(s.root, className)}>
@@ -110,15 +114,21 @@ export const SectionInfo: FC<Props> = ({
           />
         </div>
       )}
-      {isWide ? (
-        <Button onClick={() => onClick(activeGroup)}>Записаться</Button>
-      ) : (
-        children?.length > 0 && (
+      <div className={s.buttons}>
+        {signWithCallOnly && (
+          <a href={`tel:${organizationPhone}`}>
+            <Button>Записаться</Button>
+          </a>
+        )}
+        {!signWithCallOnly && isWide && hasChildren && (
+          <Button onClick={() => onClick(activeGroup)}>Записаться</Button>
+        )}
+        {!signWithCallOnly && !isWide && hasChildren && (
           <Link className={s.sign} to={`/sign/${activeGroup}`}>
             <Button isWide>Записаться</Button>
           </Link>
-        )
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -88,11 +88,13 @@ export interface ISection {
   minAge?: number;
   maxAge?: number;
   latitude?: number;
+  isRegisterByPhoneOnly?: boolean;
   longitude?: number;
   placesCount: number;
   freePlacesCount: number;
   organizationName?: string;
   organizationAdress?: string;
+  organizationPhone?: string;
   address?: string;
   sectionGroups: ISectionGroup[];
 }
