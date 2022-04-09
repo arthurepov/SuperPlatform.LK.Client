@@ -24,6 +24,8 @@ namespace SuperPlatform.LK.Client.Models.Sections
 
         public string TeacherPhoto { get; set; }
 
+        public bool IsRegisterByPhoneOnly { get; set; }
+
         public IReadOnlyList<SectionGroupScheduleDto> SectionGroupSchedules { get; set; }
     }
 }

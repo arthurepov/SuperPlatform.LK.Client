@@ -30,6 +30,8 @@ namespace SuperPlatform.LK.Client.Models.Sections
 
         public int Duration { get; set; }
 
+        public bool IsRegisterByPhoneOnly { get; set; }
+
         public IReadOnlyList<SectionGroupDto> SectionGroups { get; set; } = new List<SectionGroupDto>();
     }
 }

@@ -74,6 +74,7 @@ namespace SuperPlatform.LK.Client.Controllers
                 RecordType = (int?)section.RecordType,
                 TeacherFullName = teacher == null ? string.Empty : $"{section.Teacher?.LastName} {section.Teacher?.FirstName} {section.Teacher?.MiddleName}",
                 TeacherPhoto = teacher == null ? string.Empty : teacher?.Photo?.GetAbsoluteUrl(),
+                IsRegisterByPhoneOnly = section.Organization.IsRegisterByPhoneOnly,
                 SectionGroupSchedules = schedules.Select(x=>new SectionGroupScheduleDto 
                 {
                     Id = x.Id,

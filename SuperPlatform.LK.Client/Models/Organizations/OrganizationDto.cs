@@ -21,5 +21,7 @@ namespace SuperPlatform.LK.Client.Models.Organizations
         public string Phone { get; set; }
 
         public ImageMediaDto Photo { get; set; }
+
+        public bool IsRegisterByPhoneOnly { get; set; }
     }
 }

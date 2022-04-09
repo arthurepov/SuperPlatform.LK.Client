@@ -58,6 +58,7 @@ namespace SuperPlatform.LK.Client.Controllers
                 Name = section.Name,
                 RecordType = section.RecordType.HasValue ? (int?)section.RecordType : null,
                 Address = section.Organization.address,
+                IsRegisterByPhoneOnly = section.Organization.IsRegisterByPhoneOnly,
                 MinAge = section.MinAge,
                 MaxAge = section.MaxAge,
                 OrganizationName = section.Organization.name,

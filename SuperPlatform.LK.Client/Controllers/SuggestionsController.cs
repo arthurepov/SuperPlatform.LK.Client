@@ -91,6 +91,7 @@ namespace SuperPlatform.LK.Client.Controllers
                 Duration = section.Duration,
                 MaxPlacesCount = section.MaxPlacesCount,
                 MinPlacesCount = section.MinPlacesCount,
+                IsRegisterByPhoneOnly = section.Organization.IsRegisterByPhoneOnly,
                 SectionGroups = sectionGroups
                     .Select(x => new SectionGroupDto
                     {

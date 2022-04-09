@@ -23,5 +23,7 @@ namespace SuperPlatform.LK.Client.Domain.Organizations.Models
         public City City { get; set; }
 
         public ImageMedia Image { get; set; }
+
+        public bool IsRegisterByPhoneOnly { get; set; }
     }
 }

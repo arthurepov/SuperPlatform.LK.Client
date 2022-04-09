@@ -6,6 +6,8 @@ namespace SuperPlatform.LK.Client.Domain.Children.Models
     {
         public string EducationCardChildId { get; set; }
 
-        public string Email { get; set; }
+        public string Phone { get; set; }
+
+        // public string Email { get; set; }
     }
 }

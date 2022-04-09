@@ -27,5 +27,7 @@ namespace SuperPlatform.LK.Client.Domain.Sections.Models
         public double? longitude { get; set; }
 
         public string Phone { get; set; }
+
+        public bool IsRegisterByPhoneOnly { get; set; }
     }
 }

@@ -72,7 +72,8 @@ namespace SuperPlatform.LK.Client.Controllers
                 Longitude = organization.Longitude,
                 Name = organization.Name,
                 Phone = organization.Phone,
-                Photo = organization.Image == null ? null : new Models.Medias.ImageMediaDto { Id = organization.Image.Id, url = organization.Image.GetAbsoluteUrl() }
+                Photo = organization.Image == null ? null : new Models.Medias.ImageMediaDto { Id = organization.Image.Id, url = organization.Image.GetAbsoluteUrl() },
+                IsRegisterByPhoneOnly = organization.IsRegisterByPhoneOnly
             };
 
             await FillSections(model);
